@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pokerball</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <!--Google Fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+  
+  <style>
+  body {
+    background-color: #3860e2;
+    font-family: 'Russo One', sans-serif;
+  }
+  .button-break {
+    position: relative;
+    height: 2px;
+    width: 80%;
+    background-color: black;
+    left: 10%;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+  .button-hold {
+    position: relative;
+    width: 100px;
+    height: 75px;
+    margin: 10%;
+    background-color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10%;
+    box-shadow: 2px 2px 5px black;
+  }
+  .bet-credit-txt {
+    color: red;
+    font-weight: bold;
+    -webkit-text-fill-color: red; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: yellow;
+    text-shadow: 2px 2px 5px black;
+    text-align: center;
+  }
+  .jumbotron {
+    background-color: #44484f;
+    color: yellow;
+    border-style: solid;
+    border-color: yellow; 
+    box-shadow: 2px 2px 5px black;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  /*flip card css */
+  .flip-card {
+    background-color: transparent;
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+    margin: 12px;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+
+  .flip-card-rotate {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+  }
+
+  .flip-card-front {
+    background-color: #3860e2;
+    color: black;
+    z-index: 2;
+    border-radius: 15px;
+  }
+
+  .flip-card-back {
+    background-color: #2980b9;
+    color: white;
+    transform: rotateY(180deg);
+    z-index: 1;
+  }
+  .card-img {
+    border-radius: 15px;
+  }
+  .hold-text {
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    text-align: center;
+ }
+   .hide {
+     opacity: 0;
+   }
+  
+  </style>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>POKERBALL...</h1>
+  <p>WHERE FANTASY BASKETBALL MEETS POKER!</p> 
+</div>
+  
+<div class="container">
+<!--Card Row-->
+  <div class="row">
+  
+  <!--Card1-->
+    <div class="col-sm-2.4">
+      <h4 id="hold-text-card1" class="hold-text hide">HOLD</h4>
+      <div class="flip-card">
+      <!--where card id goes for jQuery-->
+        <div id="card1" class="flip-card-inner deal-card">
+          <div class="flip-card-front">
+            <img class="card-img" src="https://siegelgale.scdn3.secure.raxcdn.com/content/uploads/2015/07/siegelgale-nba-logo1.jpg" alt="Avatar" style="width:200px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--Card2-->
+    <div class="col-sm-2.4">
+      <h4 id="hold-text-card2" class="hold-text hide">HOLD</h4>
+	  <div class="flip-card">
+      <!--where card id goes for jQuery-->
+        <div id="card2" class="flip-card-inner deal-card">
+          <div class="flip-card-front">
+            <img class="card-img" src="https://siegelgale.scdn3.secure.raxcdn.com/content/uploads/2015/07/siegelgale-nba-logo1.jpg" alt="Avatar" style="width:200px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--Card3-->
+    <div class="col-sm-2.4">
+      <h4 id="hold-text-card3" class="hold-text hide">HOLD</h4>
+      <div class="flip-card">
+      <!--where card id goes for jQuery-->
+        <div id="card3" class="flip-card-inner deal-card">
+          <div class="flip-card-front">
+            <img class="card-img" src="https://siegelgale.scdn3.secure.raxcdn.com/content/uploads/2015/07/siegelgale-nba-logo1.jpg" alt="Avatar" style="width:200px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--Card4-->
+    <div class="col-sm-2.4">
+    <h4 id="hold-text-card4" class="hold-text hide">HOLD</h4>
+      <div class="flip-card">
+      <!--where card id goes for jQuery-->
+        <div id="card4" class="flip-card-inner deal-card">
+          <div class="flip-card-front">
+            <img class="card-img" src="https://siegelgale.scdn3.secure.raxcdn.com/content/uploads/2015/07/siegelgale-nba-logo1.jpg" alt="Avatar" style="width:200px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!--Card5-->
+    <div class="col-sm-2.4">
+      <h4 id="hold-text-card5" class="hold-text hide">HOLD</h4>
+      <div class="flip-card">
+      <!--where card id goes for jQuery-->
+        <div id="card5" class="flip-card-inner deal-card">
+          <div class="flip-card-front">
+            <img class="card-img" src="https://siegelgale.scdn3.secure.raxcdn.com/content/uploads/2015/07/siegelgale-nba-logo1.jpg" alt="Avatar" style="width:200px;height:300px;">
+          </div>
+          <div class="flip-card-back">
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  
+  <!--bet and credit row-->
+  <div class="row">
+    <div class="col-sm-4">
+      <h3 class="bet-credit-txt">BET:<div id="bet-amt">0</div></h3>
+    </div>
+    <div class="col-sm-4">
+      <h3 class="bet-credit-txt">HAND TOTAL:<div id="hand-total">0</div></h3>
+    </div>
+    <div class="col-sm-4">
+      <h3 class="bet-credit-txt">CREDITS:<div id="credit-amt">200</div></h3>
+    </div>
+  </div>
+  
+  <!--Hold Button Row-->
+  <div class="row">
+    <div class="col">
+      <button id="bet-one" class="button-hold">BET <br> ONE</button>
+    </div>
+    <div class="col">
+      <button id="hold-card1" class="button-hold">HOLD <br> <div class="button-break"></div> CANCEL</button>
+    </div>
+    <div class="col">
+      <button id="hold-card2" class="button-hold">HOLD <br> <div class="button-break"></div> CANCEL</button>
+    </div>
+    <div class="col">
+      <button id="hold-card3" class="button-hold">HOLD <br> <div class="button-break"></div> CANCEL</button>
+    </div>
+    <div class="col">
+      <button id="hold-card4" class="button-hold">HOLD <br> <div class="button-break"></div> CANCEL</button>
+    </div>
+    <div class="col">
+      <button id="hold-card5" class="button-hold">HOLD <br> <div class="button-break"></div> CANCEL</button>
+    </div>
+    <div class="col">
+      <button id="max-bet" class="button-hold">MAX <br> BET</button>
+    </div>
+    <div class="col">
+      <button id="deal" class="button-hold">DEAL <br> <div class="button-break"></div> DRAW</button>
+    </div>
+  </div>
+</div>
+
+<script>
+//global variables
+var bet= null; 
+var credits = 200;
+
+//bet one function
+$("#bet-one").on("click", function () {
+      //adds to bet
+      bet++;
+      //subtracts credits
+      credits--;
+      
+      //updates bet to html
+      $("#bet-amt").text(bet);
+      //updates credits to html
+      $("#credit-amt").text(credits);
+  });
+  
+//max bet function
+$("#max-bet").on("click", function () {
+      //adds to bet
+      bet += 5;
+      //subtracts credits
+      credits -= 5;
+      
+      //updates bet to html
+      $("#bet-amt").text(bet);
+      //updates credits to html
+      $("#credit-amt").text(credits);
+  });
+
+
+//deal cards function
+ $( "#deal" ).on( "click", function() {
+   $(".deal-card").toggleClass("flip-card-rotate");
+   $(".hold-text").addClass("hide");
+});
+
+//hold and cancel hold functions
+ $( "#hold-card1" ).on( "click", function() {
+   $("#card1").toggleClass("deal-card");
+   $("#hold-text-card1").toggleClass("hide");
+});
+ $( "#hold-card2" ).on( "click", function() {
+   $("#card2").toggleClass("deal-card");
+   $("#hold-text-card2").toggleClass("hide");
+});
+ $( "#hold-card3" ).on( "click", function() {
+   $("#card3").toggleClass("deal-card");
+   $("#hold-text-card3").toggleClass("hide");
+});
+ $( "#hold-card4" ).on( "click", function() {
+   $("#card4").toggleClass("deal-card");
+   $("#hold-text-card4").toggleClass("hide");
+});
+ $( "#hold-card5" ).on( "click", function() {
+   $("#card5").toggleClass("deal-card");
+   $("#hold-text-card5").toggleClass("hide");
+});
+
+</script>
+
+</body>
+</html>
