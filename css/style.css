@@ -1,0 +1,378 @@
+
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+
+
+* {margin: 0; padding: 0;}
+
+html {
+	height: 100%;
+	/*Image only BG fallback*/
+	background: url('../assets/2.jpg');
+	
+}
+
+body {
+	font-family: montserrat, arial, verdana;
+}
+
+#msform {
+	width: 400px;
+	margin: 50px auto;
+	text-align: center;
+	position: relative;
+}
+#msform fieldset {
+	background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	padding: 20px 30px;
+	
+	box-sizing: border-box;
+	width: 80%;
+	margin: 0 10%;
+	
+	
+	position: relative;
+}
+
+#msform fieldset:not(:first-of-type) {
+	display: none;
+}
+
+#msform input, #msform textarea {
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+	font-family: montserrat;
+	color: #2C3E50;
+	font-size: 13px;
+}
+
+#msform .action-button {
+	width: 100px;
+	background: #528ce0;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+#msform .action-button:hover, #msform .action-button:focus {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #528ce0;
+}
+
+.fs-title {
+	font-size: 15px;
+	text-transform: uppercase;
+	color: #2C3E50;
+	margin-bottom: 10px;
+}
+.fs-subtitle {
+	font-weight: normal;
+	font-size: 13px;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+
+/* ******************************************************************************************* */
+/* ******************************************************************************************* */
+/* ******************************************************************************************* */
+
+
+/* the Loader */
+
+#loader-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+#loader{
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #fff /*rgb(255, 255, 255)*/;
+    -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    z-index: 1001;
+
+}
+
+    #loader:before{
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #fff;
+        -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+    }
+
+    #loader:after{
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #fff /*rgb(255, 255, 255)*/;
+        -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+        animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+
+    }
+
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+      -ms-transform: rotate(0deg);  /* IE 9 */
+          transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera  */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera  */
+
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera  */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera  */
+
+    }
+}
+
+    #loader-wrapper .loader-section {
+        position: fixed;
+        top: 0;
+        width: 51%;
+        height: 100%;
+        background: #1a1a1a /*rgb(26, 26, 26)*/;
+        z-index: 1000;
+    }
+
+    #loader-wrapper .loader-section.section-left{
+        left: 0;
+    }
+
+    #loader-wrapper .loader-section.section-right{
+        right: 0;
+    }
+    /* Loaded Styles */
+    .loaded #loader-wrapper .loader-section.section-left{
+        -webkit-transform: translateX(-100%);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: translateX(-100%);  /* IE 9 */
+        transform: translateX(-100%);  /* Firefox 16+, IE 10+, Opera  */
+
+        -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  /* Android 2.1+, Chrome 1-25, iOS 3.2-6.1, Safari 3.2-6  */
+        transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  /* Chrome 26, Firefox 16+, iOS 7+, IE 10+, Opera, Safari 6.1+  */
+
+    }
+.loaded #loader-wrapper .loader-section.section-right{
+    -webkit-transform: translateX(100%);  /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: translateX(100%);  /* IE 9 */
+    transform: translateX(100%);  /* Firefox 16+, IE 10+, Opera  */
+
+    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  /* Android 2.1+, Chrome 1-25, iOS 3.2-6.1, Safari 3.2-6  */
+    transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  /* Chrome 26, Firefox 16+, iOS 7+, IE 10+, Opera, Safari 6.1+  */
+
+}
+
+.loaded #loader{
+    opacity: 0;
+
+    -webkit-transition: all 0.3s ease-out;  /* Android 2.1+, Chrome 1-25, iOS 3.2-6.1, Safari 3.2-6  */
+    transition: all 0.3s ease-out;  /* Chrome 26, Firefox 16+, iOS 7+, IE 10+, Opera, Safari 6.1+  */
+}
+.loaded #loader-wrapper{
+    visibility: hidden;
+
+    -webkit-transform: translateY(-100%);  /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: translateY(-100%);  /* IE 9 */
+    transform: translateY(-100%);  /* Firefox 16+, IE 10+, Opera  */
+
+    -webkit-transition: all 0.3s 1s ease-out;  /* Android 2.1+, Chrome 1-25, iOS 3.2-6.1, Safari 3.2-6  */
+    transition: all 0.3s 1s ease-out;  /* Chrome 26, Firefox 16+, iOS 7+, IE 10+, Opera, Safari 6.1+  */
+}
+   /* ******************************************************************************************* */
+   /* ******************************************************************************************* */
+
+/* the slideshow background of the teams */
+
+.slideshow { 
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+  
+.slideshow li { 
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 35s linear infinite; 
+}
+  
+.slideshow li:nth-child(1) { 
+	background-image: url(../Img/Atlanta.jpg);
+	 
+  }
+.slideshow li:nth-child(2) { 
+    background-image: url(../Img/Boston.jpg);
+    animation-delay: 5s; 
+  }
+.slideshow li:nth-child(3) { 
+    background-image: url(../Img/Cleveland.jpg);
+    animation-delay: 10s; 
+}
+.slideshow li:nth-child(4) { 
+    background-image: url(../Img/Clippers.jpg);
+    animation-delay: 15s; 
+}
+.slideshow li:nth-child(5) { 
+    background-image: url(../Img/Dallas.jpg);
+    animation-delay: 20s; 
+}
+.slideshow li:nth-child(6) { 
+    background-image: url(../Img/Detroit.jpg);
+    animation-delay: 25s; 
+}
+.slideshow li:nth-child(7) { 
+    background-image: url(../Img/GoldenState.jpg);
+    animation-delay: 30s; 
+}
+.slideshow li:nth-child(8) { 
+    background-image: url(../Img/Indiana.jpg);
+    animation-delay: 35s; 
+}
+.slideshow li:nth-child(9) { 
+    background-image: url(../Img/LA.jpg);
+    animation-delay: 40s; 
+}
+.slideshow li:nth-child(10) { 
+    background-image: url(../Img/Memphis.jpg);
+    animation-delay: 45s; 
+}
+.slideshow li:nth-child(11) { 
+    background-image: url(../Img/Miami.jpg);
+    animation-delay: 50s; 
+}
+.slideshow li:nth-child(12) { 
+    background-image: url(../Img/Milwaukee.jpg);
+    animation-delay: 55s; 
+}
+.slideshow li:nth-child(13) { 
+    background-image: url(../Img/Oklahoma.jpg);
+    animation-delay: 60s; 
+}
+.slideshow li:nth-child(14) { 
+    background-image: url(../Img/Orlando.jpg);
+    animation-delay: 65s; 
+}
+.slideshow li:nth-child(15) { 
+    background-image: url(../Img/Philadelphia.jpg);
+    animation-delay: 70s; 
+}
+.slideshow li:nth-child(16) { 
+    background-image: url(../Img/Phoenix.jpg);
+    animation-delay: 75s; 
+}
+.slideshow li:nth-child(17) { 
+    background-image: url(../Img/Portland.jpg);
+    animation-delay: 80s; 
+}
+.slideshow li:nth-child(18) { 
+    background-image: url(../Img/Sacramento.jpg);
+    animation-delay: 85s; 
+}
+.slideshow li:nth-child(19) { 
+    background-image: url(../Img/SanAntonio.jpg);
+    animation-delay: 90	s; 
+}
+.slideshow li:nth-child(20) { 
+    background-image: url(../Img/Toronto.jpg);
+    animation-delay: 95s; 
+}
+.slideshow li:nth-child(21) { 
+    background-image: url(../Img/Utah.jpg);
+    animation-delay: 100s; 
+}
+.slideshow li:nth-child(22) { 
+    background-image: url(../Img/Washington.jpg);
+    animation-delay: 105s; 
+}
+.slideshow li:nth-child(23) { 
+    background-image: url(../Img/Hornets.jpg);
+    animation-delay: 110s; 
+}
+.slideshow li:nth-child(24) { 
+    background-image: url(../Img/chicago.jpg);
+    animation-delay: 115s; 
+}
+.slideshow li:nth-child(25) { 
+    background-image: url(../Img/houston.jpg);
+    animation-delay: 120s; 
+}
+  
+@keyframes imageAnimation { 
+    0% { 
+      opacity: 0; 
+      animation-timing-function: ease-in;
+  }
+    10% {
+      opacity: 1;
+      animation-timing-function: ease-out;
+  }
+    20% {
+      opacity: 1
+  }
+    30% {
+      opacity: 0
+  }
+}
+  
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+      opacity: 1;
+}
+   /* ******************************************************************************************* */
+   /* ******************************************************************************************* */
