@@ -1,7 +1,7 @@
-import db from "../models";
+const db = "../models";
 
 // Defining methods for the booksController
-export default {
+module.exports = {
   findAll: function(req, res) {
     db.User
       .find(req.query)
