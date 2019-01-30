@@ -409,6 +409,8 @@
       $("#credit-amt").text(credits);
       //enable deal button
       document.getElementById("deal").disabled = false;
+      //disable max bet after first click so we dont exceed the max bet
+      document.getElementById("max-bet").disabled = true;
       //disable betting after max bet reached
       if (bet >= maxBet) {
         document.getElementById("max-bet").disabled = true;
@@ -480,6 +482,7 @@
         */
 
         //playing computer win or lose function with odds 70-79 = 1:1, 80-89= 2:1, 90-99 = 3:1, 100-109 = 4:1
+        
         if (70 <= handTotal && handTotal < 80) {
           credits = bet + credits;
           $("#credit-amt").text(credits);
@@ -504,6 +507,7 @@
           bet -= bet;
           $("#bet-amt").text(bet);
         }
+        
 
       } else {
         // odd clicks (DEAL FUNCTION)
