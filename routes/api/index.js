@@ -1,6 +1,6 @@
 const express = require("express");
 const userRoutes = require("./users");
-const nbaRoutes = require("./nba");
+//const nbaRoutes = require("./nba");
 
 const router = express.Router();
 
