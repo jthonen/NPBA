@@ -52,7 +52,8 @@
       text-align: center;
       border-radius: 2%;
       box-shadow: 2px 2px 5px black;
-      left: 35%;
+      left: 39%;
+      right: auto;
       margin-top: 2%;
       margin-bottom: 2%;
     }
@@ -202,13 +203,13 @@
             </div>
             <div class="flip-card-back">
               <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
+              <p id="value-card1" class="value-card burn-card">22</p>
               <p>We love that guy</p>
             </div>
             <!--draw card-->
             <div id="card1-draw" class="flip-card-back2 hide-flip-card deal-card2">
               <h1>Jack Hoffman</h1>
-              <p>Baller</p>
+              <p id="value-draw-card1" class="value-draw-card">14</p>
               <p>Fuck that guy</p>
             </div>
           </div>
@@ -227,13 +228,13 @@
             </div>
             <div class="flip-card-back">
               <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
+              <p id="value-card2" class="value-card burn-card">9</p>
               <p>We love that guy</p>
             </div>
             <!--draw card-->
             <div id="card2-draw" class="flip-card-back2 hide-flip-card deal-card2">
               <h1>Jack Hoffman</h1>
-              <p>Baller</p>
+              <p id="value-draw-card2" class="value-draw-card">27</p>
               <p>Fuck that guy</p>
             </div>
           </div>
@@ -252,13 +253,13 @@
             </div>
             <div class="flip-card-back">
               <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
+              <p id="value-card3" class="value-card burn-card">4</p>
               <p>We love that guy</p>
             </div>
             <!--draw card-->
             <div id="card3-draw" class="flip-card-back2 hide-flip-card deal-card2">
               <h1>Jack Hoffman</h1>
-              <p>Baller</p>
+              <p id="value-draw-card3" class="value-draw-card">24</p>
               <p>Fuck that guy</p>
             </div>
           </div>
@@ -277,13 +278,13 @@
             </div>
             <div class="flip-card-back">
               <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
+              <p id="value-card4" class="value-card burn-card">17</p>
               <p>We love that guy</p>
             </div>
             <!--draw card-->
             <div id="card4-draw" class="flip-card-back2 hide-flip-card deal-card2">
               <h1>Jack Hoffman</h1>
-              <p>Baller</p>
+              <p id="value-draw-card4" class="value-draw-card">5</p>
               <p>Fuck that guy</p>
             </div>
           </div>
@@ -302,15 +303,15 @@
             </div>
             <div class="flip-card-back">
               <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
+              <p id="value-card5" class="value-card burn-card">13</p>
               <p>We love that guy</p>
             </div>
-          </div>
-          <!--draw card-->
-          <div id="card5-draw" class="flip-card-back2 hide-flip-card deal-card2">
-            <h1>Jack Hoffman</h1>
-            <p>Baller</p>
-            <p>Fuck that guy</p>
+            <!--draw card-->
+            <div id="card5-draw" class="flip-card-back2 hide-flip-card deal-card2">
+              <h1>Jack Hoffman</h1>
+              <p id="value-draw-card5" class="value-draw-card">18</p>
+              <p>Fuck that guy</p>
+            </div>
           </div>
         </div>
       </div>
@@ -375,7 +376,9 @@
 
   <!--Play again button row-->
   <div class="row">
-    <button id="play-again" disabled><h1>PLAY AGAIN</h1></button>
+    <button id="play-again" disabled>
+      <h1>PLAY AGAIN</h1>
+    </button>
   </div>
 
   <div id="game-over" class="hide-game-over">
@@ -386,35 +389,52 @@
     //global variables
     var bet = null;
     var credits = 200;
+    var handTotal = null;
+    var dealCardsTotal = 0;
+    var drawCardsTotal = 0;
+    var burnCards = 0;
+    var minBet = 1;
+    var maxBet = 5;
+    //var opponentHand = 75;
 
     //bet one function
     $("#bet-one").on("click", function () {
       //adds to bet
-      bet++;
+      bet += minBet;
       //subtracts credits
-      credits--;
-
+      credits -= minBet;
       //updates bet to html
       $("#bet-amt").text(bet);
       //updates credits to html
       $("#credit-amt").text(credits);
       //enable deal button
       document.getElementById("deal").disabled = false;
+      //disable betting after max bet reached
+      if (bet >= maxBet) {
+        document.getElementById("max-bet").disabled = true;
+        document.getElementById("bet-one").disabled = true;
+      }
+      console.log(bet);
     });
 
     //max bet function
     $("#max-bet").on("click", function () {
       //adds to bet
-      bet += 5;
+      bet += maxBet;
       //subtracts credits
-      credits -= 5;
-
+      credits -= maxBet;
       //updates bet to html
       $("#bet-amt").text(bet);
       //updates credits to html
       $("#credit-amt").text(credits);
       //enable deal button
       document.getElementById("deal").disabled = false;
+      console.log(bet);
+      //disable betting after max bet reached
+      if (bet >= maxBet) {
+        document.getElementById("max-bet").disabled = true;
+        document.getElementById("bet-one").disabled = true;
+      }
     });
 
     //deal and draw button function
@@ -432,11 +452,59 @@
         document.getElementById("deal").disabled = true;
         //enable play again button
         document.getElementById("play-again").disabled = false;
-        //reset bet
-        bet -= bet;
-        $("#bet-amt").text(bet);
         //show game over text
         $("#game-over").removeClass("hide-game-over");
+        //total all cards with burn-card class and update burnCards variable
+        $('.burn-card').each(function () {
+          burnCards += parseFloat($(this).text());
+        });
+        //total all draw cards and update drawCardsTotal variable
+        $('.value-draw-card').each(function () {
+          drawCardsTotal += parseFloat($(this).text());
+        });
+        //add hand total and push to html
+        handTotal = dealCardsTotal + drawCardsTotal - burnCards;
+        $("#hand-total").text(handTotal);
+
+        //playing real opponent win or lose function
+        /*
+        if (handTotal > opponentHand) {
+          credits = (bet * 2) + credits;
+          $("#credit-amt").text(credits);
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        } else {
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        }
+        */
+
+        //playing computer win or lose function with odds 70-79 = 1:1, 80-89= 2:1, 90-99 = 3:1, 100-109 = 4:1
+        if (70 <= handTotal && handTotal < 80) {
+          credits = bet + credits;
+          $("#credit-amt").text(credits);
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        } else if (80 <= handTotal && handTotal < 90) {
+          credits = (bet * 2) + credits;
+          $("#credit-amt").text(credits);
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        } else if (90 <= handTotal && handTotal < 100) {
+          credits = (bet * 3) + credits;
+          $("#credit-amt").text(credits);
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        } else if (100 <= handTotal && handTotal < 110) {
+          credits = (bet * 4) + credits;
+          $("#credit-amt").text(credits);
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        } else {
+          bet -= bet;
+          $("#bet-amt").text(bet);
+        }
+
       } else {
         // odd clicks (DEAL FUNCTION)
         $(".deal-card").toggleClass("flip-card-rotate");
@@ -450,27 +518,40 @@
         //disable bet and max bet buttons
         document.getElementById("bet-one").disabled = true;
         document.getElementById("max-bet").disabled = true;
+        //total value of all deal cards
+        //total all draw cards and update drawCardsTotal variable
+        $('.value-card').each(function () {
+          dealCardsTotal += parseFloat($(this).text());
+        });
+        //add hand total and push to html
+        handTotal = dealCardsTotal;
+        $("#hand-total").text(handTotal);
       }
       $(this).data("clicks", !clicks);
     });
-    
+
     //play again function
     $("#play-again").on("click", function () {
       //hide the 2nd cards dealt
       $(".deal-card2").addClass("hide-flip-card");
-      //add deal-card class so that cards can be flipped
-      $("#card1").addClass("deal-card");
-      $("#card2").addClass("deal-card");
-      $("#card3").addClass("deal-card");
-      $("#card4").addClass("deal-card");
-      $("#card5").addClass("deal-card");
-      //add deal-card2 class so that draw cards can be sent
+      //add deal-card2 class so that draw cards can be dealt
       $("#card1-draw").addClass("deal-card2");
       $("#card2-draw").addClass("deal-card2");
       $("#card3-draw").addClass("deal-card2");
       $("#card4-draw").addClass("deal-card2");
       $("#card5-draw").addClass("deal-card2");
-
+      //add back burn-card class
+      $("#value-card1").addClass("burn-card");
+      $("#value-card2").addClass("burn-card");
+      $("#value-card3").addClass("burn-card");
+      $("#value-card4").addClass("burn-card");
+      $("#value-card5").addClass("burn-card");
+      //add back value-draw-card class
+      $("#value-draw-card1").addClass("value-draw-card");
+      $("#value-draw-card2").addClass("value-draw-card");
+      $("#value-draw-card3").addClass("value-draw-card");
+      $("#value-draw-card4").addClass("value-draw-card");
+      $("#value-draw-card5").addClass("value-draw-card");
       //flip cards
       $(".deal-card").toggleClass("flip-card-rotate");
       //hide hold text
@@ -482,29 +563,52 @@
       document.getElementById("max-bet").disabled = false;
       //disable play again button
       document.getElementById("play-again").disabled = true;
+      //reset hand total
+      handTotal -= handTotal;
+      $("#hand-total").text(handTotal);
+      //reset deal card total
+      dealCardsTotal -= dealCardsTotal;
+      //reset draw card total
+      drawCardsTotal -= drawCardsTotal;
+      //reset burn card total
+      burnCards -= burnCards;
     });
 
     //hold and cancel hold functions
     $("#hold-card1").on("click", function () {
+      //toggle class to hold or draw card
       $("#card1-draw").toggleClass("deal-card2");
+      //toggle class to show or hide, "hold," text
       $("#hold-text-card1").toggleClass("hide");
+      //toggle class to add burn card variable
+      $("#value-card1").toggleClass("burn-card");
+      //toggle class value-draw card for whether or not it will be counted in drawCardsTotal
+      $("#value-draw-card1").toggleClass("value-draw-card");
       console.log("btn worked!");
     });
     $("#hold-card2").on("click", function () {
       $("#card2-draw").toggleClass("deal-card2");
       $("#hold-text-card2").toggleClass("hide");
+      $("#value-card2").toggleClass("burn-card");
+      $("#value-draw-card2").toggleClass("value-draw-card");
     });
     $("#hold-card3").on("click", function () {
       $("#card3-draw").toggleClass("deal-card2");
       $("#hold-text-card3").toggleClass("hide");
+      $("#value-card3").toggleClass("burn-card");
+      $("#value-draw-card3").toggleClass("value-draw-card");
     });
     $("#hold-card4").on("click", function () {
       $("#card4-draw").toggleClass("deal-card2");
       $("#hold-text-card4").toggleClass("hide");
+      $("#value-card4").toggleClass("burn-card");
+      $("#value-draw-card4").toggleClass("value-draw-card");
     });
     $("#hold-card5").on("click", function () {
       $("#card5-draw").toggleClass("deal-card2");
       $("#hold-text-card5").toggleClass("hide");
+      $("#value-card5").toggleClass("burn-card");
+      $("#value-draw-card5").toggleClass("value-draw-card");
     });
 
   </script>
