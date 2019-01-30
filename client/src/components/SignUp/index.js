@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-function SignUp() {
+function SignUp(props) {
     return (
         <div>
             <ul class="slideshow">
