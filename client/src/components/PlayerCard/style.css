@@ -1,3 +1,32 @@
-div {
-    border: solid black 1px;
+.PlayerCard     {
+    border: solid white 2px;
+    background-color: white;
+    flex: 1;
+    width: 19%;
+    margin: .5%;
+    height: 100%;
+    text-align: left;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-bottom: solid white 5px;
+    padding: 0%;
+}
+
+.TeamLogo   {
+    height: 47%;
+    width: 47%;
+}
+
+.PlayerImage    {
+    max-width: 100%;
+}
+
+.CardBackground {
+    height: 85%;
+}
+.CardUtilitySection {
+    height: auto;
+    width: 100%;
+    background-color: white;
 }
