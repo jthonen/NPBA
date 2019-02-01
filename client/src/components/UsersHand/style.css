@@ -1,3 +1,7 @@
-div {
-    border: solid black 5px;
+.UsersHand  {
+    display: flex;
+    height: 60%;
+    width: 85%;
+    margin-left: 7.5%;
+    margin-top: 3%;
 }

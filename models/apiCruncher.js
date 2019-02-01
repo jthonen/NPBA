@@ -60,7 +60,8 @@ function makePlayerStatsArray(data, i) {
 // this function is used to give the teamStyleGuide values for each player object made in makePlayerObj
 function givePlayerStyle(teamStyleGuide, startedPlayerObj)  {
     for (let k=0; k < teamStyleGuide.length; k++)    {
-        teamStyleGuide[k].style = "background: linear-gradient(to bottom, "+teamStyleGuide[k].color+" 0%, "+teamStyleGuide[k].color+" 38%, transparent 100%) no-repeat, #0b1a36"
+        teamStyleGuide[k].style = {
+            "background": "linear-gradient(to bottom, "+teamStyleGuide[k].color+" 0%, "+teamStyleGuide[k].color+" 38%, transparent 100%) no-repeat, #0b1a36"};
         if (teamStyleGuide[k].team === startedPlayerObj.team)  {
             startedPlayerObj.team_color = teamStyleGuide[k].color;
             startedPlayerObj.team_style = teamStyleGuide[k].style;

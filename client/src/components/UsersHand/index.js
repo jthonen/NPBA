@@ -3,7 +3,6 @@ import "./style.css";
 import PlayerCard from "../PlayerCard";
 
 function UsersHand(props) {
-    console.log(props);
     return  (
         <div className="UsersHand">
             {
