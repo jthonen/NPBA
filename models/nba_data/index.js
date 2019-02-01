@@ -1,43 +1,4 @@
-{
-    "resource": "leaguedashplayerstats",
-    "parameters": {
-        "MeasureType": "Base",
-        "PerMode": "PerGame",
-        "PlusMinus": "N",
-        "PaceAdjust": "N",
-        "Rank": "N",
-        "LeagueID": "00",
-        "Season": "2017-18",
-        "SeasonType": "Regular Season",
-        "PORound": 0,
-        "Outcome": null,
-        "Location": null,
-        "Month": 0,
-        "SeasonSegment": null,
-        "DateFrom": null,
-        "DateTo": null,
-        "OpponentTeamID": 0,
-        "VsConference": null,
-        "VsDivision": null,
-        "TeamID": 0,
-        "Conference": null,
-        "Division": null,
-        "GameSegment": null,
-        "Period": 0,
-        "ShotClockRange": null,
-        "LastNGames": 0,
-        "GameScope": null,
-        "PlayerExperience": null,
-        "PlayerPosition": null,
-        "StarterBench": null,
-        "DraftYear": null,
-        "DraftPick": null,
-        "College": null,
-        "Country": null,
-        "Height": null,
-        "Weight": null,
-        "TwoWay": 0
-    },
+module.exports = {
     "resultSets": [
         {
             "name": "LeagueDashPlayerStats",
@@ -36292,4 +36253,4 @@
             ]
         }
     ]
-}
+};

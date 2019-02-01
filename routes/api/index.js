@@ -1,10 +1,7 @@
-const express = require("express");
-const userRoutes = require("./users");
-//const nbaRoutes = require("./nba");
+const router = require("express").Router();
+const nbaRoutes = require("./nbaRoutes");
 
-const router = express.Router();
-
-// User routes
-router.use("/users", userRoutes);
+// NBA routes
+router.use("/nba", nbaRoutes);
 
 module.exports = router;

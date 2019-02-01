@@ -1,3 +1,5 @@
+const API_DATA = require("./nba_data");
+
 // teamStyleGuide is an array containing a style guide object for each nba team
 const teamStyleGuide = [
     {team: "LAL", color: "#fdba33"},
@@ -58,7 +60,7 @@ function makePlayerStatsArray(data, i) {
 // this function is used to give the teamStyleGuide values for each player object made in makePlayerObj
 function givePlayerStyle(teamStyleGuide, startedPlayerObj)  {
     for (let k=0; k < teamStyleGuide.length; k++)    {
-        teamStyleGuide[k].style = "linear-gradient(to bottom, "+teamStyleGuide[k].color+" 0%, "+teamStyleGuide[k].color+" 38%, transparent 100%) no-repeat, #0b1a36"
+        teamStyleGuide[k].style = "background: linear-gradient(to bottom, "+teamStyleGuide[k].color+" 0%, "+teamStyleGuide[k].color+" 38%, transparent 100%) no-repeat, #0b1a36"
         if (teamStyleGuide[k].team === startedPlayerObj.team)  {
             startedPlayerObj.team_color = teamStyleGuide[k].color;
             startedPlayerObj.team_style = teamStyleGuide[k].style;
@@ -78,9 +80,6 @@ function makePlayerObj(onePlayersStats) {
             case "PLAYER_NAME":
                 var player_name = statsRow[1];
                 break;
-            case "TEAM_ID":
-                var player_team_id = statsRow[1];
-                break;
             case "TEAM_ABBREVIATION":
                 var player_team = statsRow[1];
                 break;
@@ -89,7 +88,7 @@ function makePlayerObj(onePlayersStats) {
                 break;
             default: break;
         };
-        let startedPlayerObj = new Player(player_id, player_name, player_team_id, player_team, player_fantasy_points, null, null);
+        let startedPlayerObj = new Player(player_id, player_name, player_team, player_fantasy_points, null, null);
         var finishedPlayerObj = givePlayerStyle(teamStyleGuide, startedPlayerObj);
     };
     return finishedPlayerObj;
@@ -106,4 +105,21 @@ function allPlayers(data) {
     return playersArray;
 };
 
-module.exports = allPlayers;
+function crunch()   {
+    let api_data = API_DATA.resultSets[0];
+    let data = {
+        "headers": api_data.headers,
+        "allStats": api_data.rowSet
+    }
+    let players = allPlayers(data);
+    let hand = [];
+    for (i=0; i < 5; i++)   {
+        let randomIndex = Math.floor(Math.random() * Math.floor(players.length));
+        hand.push(players[randomIndex]);
+    };
+    return hand;
+};
+
+let hand = crunch();
+
+module.exports = hand;

@@ -1,3 +1,3 @@
 module.exports = {
-  User: require("./user")
+    nba_data: require("./apiCruncher.js")
 };
