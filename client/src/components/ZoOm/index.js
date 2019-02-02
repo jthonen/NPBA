@@ -20,7 +20,7 @@ function FaceId() {
 
             var videoElement = document.getElementById("zoom-video-element");
             console.log("Camera/Video initialized successfully.");
-            videoTrack = stream.getVideoTracks()[0];
+            // videoTrack = stream.getVideoTracks()[0];
                 
             videoElement.srcObject = stream;
         
