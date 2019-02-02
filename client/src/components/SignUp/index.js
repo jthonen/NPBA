@@ -1,7 +1,8 @@
 import React from "react";
 import "./style.css";
 
-function SignUp(props) {
+function SignUp() {
+
     return (
         <div>
             <ul class="slideshow">
@@ -20,9 +21,6 @@ function SignUp(props) {
                     
                             <h3 class="fs-subtitle">Name</h3>
                             <input type="text" name="name" id="name" required="required" placeholder="Please Enter Name"/><br /><br />
-                                
-                            <h3 class="fs-subtitle">Username</h3>
-                            <input type="text" name="uname" id="Username" required="required" placeholder="Username"/><br /><br />
                             
                             <h3 class="fs-subtitle">Email</h3>
                             <input type="email" name="email" id="email" required="required" placeholder="john123@gmail.com"/><br/><br />
@@ -38,5 +36,6 @@ function SignUp(props) {
         </div>
     );
 }
+
 
 export default SignUp;
