@@ -1,0 +1,8 @@
+div#GameplayPanel   {
+    margin-top: 2%;
+    width: 84.15%;
+    margin-left: 7.9%;
+    height: 24%;
+    border: solid white 2px;
+    display: flex;
+}

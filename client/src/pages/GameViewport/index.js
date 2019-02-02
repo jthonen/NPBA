@@ -1,11 +1,12 @@
 import React, {Component} from "react";
 import "./style.css";
 import UsersHand from "../../components/UsersHand";
+import GameplayPanel from "../../components/GameplayPanel";
 import API from "../../utils/API";
 
 class GameViewport extends Component    {
     state = {
-        DealingHandArray: []
+        DealingHandArray: [], GameplayPanelOptions: ["BET ONE", "MAX BET", "DEAL", "DRAW"]
     };
 
     loadHand = () =>  {
@@ -34,6 +35,11 @@ class GameViewport extends Component    {
         this.setState({DealingHandArray: updatedArray})
     };
 
+    handleGameplayPanelClick = (event) =>   {
+        let optionClicked = event.target.id;
+        return console.log(optionClicked);
+    }
+
     componentDidMount() {
         this.loadHand();
     };
@@ -41,7 +47,15 @@ class GameViewport extends Component    {
     render()    {
         return (
             <div id="GameViewport">
-                <UsersHand UsersHandArray={this.state.DealingHandArray} handleClick={this.handleCardClick}/>
+
+                <UsersHand 
+                    UsersHandArray={this.state.DealingHandArray}
+                    handleClick={this.handleCardClick}/>
+
+                <GameplayPanel 
+                    options={this.state.GameplayPanelOptions} 
+                    handleClick={this.handleGameplayPanelClick}/>
+
             </div>
         );
     };
