@@ -7,12 +7,10 @@ import GameViewport from "./pages/GameViewport";
 function App() {
   return (
     <Router>
-      <div id="Viewport">
         <Switch>
           <Route exact path="/" component={GameViewport} />
           {/*<Route exact path="/" component={SignUp} />*/}
         </Switch>
-      </div>
     </Router>
   );
 }

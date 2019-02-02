@@ -18,6 +18,17 @@
     width: 47%;
 }
 
+.PlayerName {
+    z-index: 2;
+    margin-top: -1%;
+    color: white;
+    text-align: center;
+    background-color: #0b1a36;
+    width: auto;
+    text-size-adjust: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .PlayerImage    {
     max-width: 100%;
 }
@@ -26,7 +37,12 @@
     height: 85%;
 }
 .CardUtilitySection {
-    height: auto;
+    margin-top: 10%;
+    height: 10%;
     width: 100%;
     background-color: white;
+}
+
+.CardButtonSection  {
+    display: flex;
 }

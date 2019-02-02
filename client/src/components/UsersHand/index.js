@@ -1,19 +1,27 @@
-import React from "react";
+import React, {Component} from "react";
 import "./style.css";
 import PlayerCard from "../PlayerCard";
 
-function UsersHand(props) {
-    return  (
-        <div className="UsersHand">
-            {
-                props.UsersHandArray.map((PlayerCardInHand) =>   {
-                    return  (
-                        <PlayerCard key={PlayerCardInHand.id} PlayerCardInHand={PlayerCardInHand} />
-                    )
-                })
-            }
-        </div>
-    );
-};
+class UsersHand extends Component   {
+    state = { 
+    };
 
+    render()    {
+        return  (
+            <div className="UsersHand">
+                {
+                    this.props.UsersHandArray.map((PlayerCardInHand) =>   {
+                        return  (
+                            <PlayerCard
+                                key={PlayerCardInHand.id}
+                                PlayerCardInHand={PlayerCardInHand}
+                                UsersHand={this}
+                            />
+                        )
+                    })
+                }
+            </div>
+        );
+    }
+}
 export default UsersHand;
