@@ -1,0 +1,10 @@
+.PanelButton    {
+    flex: 1;
+    margin: .1%;
+    background-color: black;
+}
+
+h1.PanelButtonText  {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
