@@ -1,9 +1,16 @@
 const router = require("express").Router();
 const crunch = require("../../../controllers");
 
-router.route("/")
+router.route("/loadHand")
     .get((req, res) =>  {
-        res.json(crunch.loadHand());
+        let cards = crunch.loadHand()();
+        res.json(cards);
     });
+
+router.route("/drawCards/:drawCards")
+    .get((req, res) =>  {
+        let cards = crunch.drawCards()(req.params.drawCards);
+        res.json(cards);
+    })
 
 module.exports = router;
