@@ -8,7 +8,12 @@ function GameInfo(props)    {
 
             {props.InfoHeadersArray.map((item) =>  {
                 return (
-                    <GameInfoSection key={item.header+"_Section"} item={item}/>
+                    <GameInfoSection 
+                    key={item.header+"_Section"}
+                    item={item}
+                    HandTotal={props.HandTotal}
+                    Bet={props.Bet}
+                    Credits={props.Credits}/>
                 );
             })}
 

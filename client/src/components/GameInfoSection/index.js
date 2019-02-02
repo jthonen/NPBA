@@ -18,7 +18,8 @@ function GameInfoSection(props) {
                 key={props.item.header + "Num"}
                 id={props.item.header}
                 className="GameInfoValues">
-
+                {(props.item.header === "HAND TOTAL") ? 
+                    props.HandTotal: (props.item.header === "BETTING") ? props.Bet : props.Credits}
             </h1>
 
         </div>

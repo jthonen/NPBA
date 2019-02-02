@@ -14,7 +14,9 @@ class GameViewport extends Component    {
             {"header": "HAND TOTAL"},
             {"header": "CREDITS"}
         ],
-        handTotal: Number
+        betting: 0,
+        handTotal: Number,
+        credits: 200,
     };
 
     loadHand = () =>  {
@@ -46,19 +48,21 @@ class GameViewport extends Component    {
         let optionClicked = event.target.id;
         switch (optionClicked)  {
             case "BET ONE":
-                // place bet one logic here
-                return console.log(optionClicked);
+                let bet = this.state.betting;
+                bet++
+                this.setState({betting: bet});
+                return;
             case "MAX BET":
-                // place max bet logic here
-                return console.log(optionClicked);
+                let initialBet = this.state.betting;
+                bet = initialBet+5;
+                this.setState({betting: bet});
+                return;
             case "DEAL":
-                // place deal logic here
                 this.loadHand();
                 break;
             default: 
-                // place draw logic here
-                    this.determineDraw()
-                return console.log(optionClicked);
+                this.determineDraw()
+                return;
         }
     };
 
@@ -97,7 +101,10 @@ class GameViewport extends Component    {
                 <div id="ViewportLeft">
 
                     <GameInfo 
-                        InfoHeadersArray={this.state.InfoHeaders}/>
+                        InfoHeadersArray={this.state.InfoHeaders}
+                        HandTotal={this.state.handTotal}
+                        Bet={this.state.betting}
+                        Credits={this.state.credits}/>
 
                 </div>
                 <div id="ViewportRight">
