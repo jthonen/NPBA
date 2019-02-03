@@ -1,12 +1,21 @@
-import React from "react";
+import React, {Component} from "react";
 import "./style.css";
 
-function FaceId() {
+class FaceTek extends Component {
 
-    // Developer is responsible for getting the camera track via WebRTC getUserMedia
-    // NOTE: There are some known edge cases for some devices with hardware/WebRTC implementation bugs that are not handled here in order to prefer code clarity in this sample.  These cases are handled in the Complete Sample camera instantiation code.
-    // NOTE 2: Also for code clarity, this function manipulates the DOM and uses functions/vars in other files.  You should modify this code to fit your application architecture and calling conventions.
-    function initCameraAndVideoLoop(constraintIndexToTry) {
+    success = (res) => {
+        let tracks = res.getVideoTracks();
+        console.log(res);
+        console.log(tracks);
+        res.addTrack(tracks[0]);
+        this.initCameraAndVideoLoop()
+    };
+
+    failure = (res) =>  {
+        return console.log(res.code)
+    }
+
+    initCameraAndVideoLoop(constraintIndexToTry) {
 
         var acceptableConstraints = [
             { audio: false, video: { width: { exact: 640 }, height: { exact: 360 }, facingMode: "user" } },
@@ -37,7 +46,7 @@ function FaceId() {
         function (error) {
             if (constraintIndexToTry < acceptableConstraints.length - 1) {
                 console.log("getUserMedia response: could not get stream for contstraint: " + constraintIndexToTry + ". Trying next constraint.<" + error.message + ">");
-                initCameraAndVideoLoop(constraintIndexToTry + 1);
+                this.initCameraAndVideoLoop(constraintIndexToTry + 1);
             }
             else {
                 console.log("Camera selection did not complete: exhausted all attempts to getUserMedia from acceptable constraints list.  Latest getUserMedia response: " + error.message);
@@ -51,25 +60,41 @@ function FaceId() {
         // 1.  Certain devices (very small amount of low/mid-tier Android devices) will sometimes not fire loaddeddata listener.  For those devices, we have found that the browser is capable of getUserMedia but due to a bug in the hardware, it is not allowed to get a camera stream until the browser is force closed and relaunched.  A future version of ZoOm will provide an example of detecting this so developers have an example of handling this.
         // 2.  Certain devices (very small amount of low/mid-tier Android devices) do not select a camera with the acceptableConstraints we list here.  In the future, we will provide code to handle the selection logic for these devices.
         // 3.  Certain devices (very small amount of low/mid-tier Android devices) have a device-wide behavior that requires user to click the video element in order to play the camera stream.  A future version of ZoOm will show the code that works around this issue by detecting this and programmatically pressing the video element on behalf of the user.
-
-    return(
-        <div>
+    render()    {
+        return(
             <div>
-                <ul class="slideshow">
-                    <li></li><li></li><li></li><li></li><li></li>
-                    <li></li><li></li><li></li><li></li><li></li>
-                    <li></li><li></li><li></li><li></li><li></li>
-                    <li></li><li></li><li></li><li></li><li></li>
-                    <li></li><li></li><li></li><li></li><li></li>
-                </ul>
+                <div>
+                    <ul className="slideshow">
+                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li>
+                        <li></li><li></li><li></li><li></li><li></li>
+                    </ul>
 
-                <div id="zoom-parent-container">
-                    <div id="zoom-interface-container"></div>
-                    <video autoplay playsinline id="zoom-video-element"></video>
+                    <div id="zoom-parent-container">
+                        <div id="zoom-interface-container"></div>
+                        <video autoPlay playsInline id="zoom-video-element"></video>
+                        <script>
+                            {window.navigator.getUserMedia({
+                                video: {
+                                    mandatory: {
+                                        minWidth: 1280,
+                                        minHeight: 720,
+                                        minFrameRate: 30
+                                        },
+                                    optional: [
+                                        { minFrameRate: 60 }
+                                    ]
+                                },
+                                audio: true
+                            }, this.success, this.failure)}
+                         </script>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-}
+        );
+    };
+};
 
-export default FaceId
+export default FaceTek;
