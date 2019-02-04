@@ -1,0 +1,19 @@
+#zoom-parent-container {
+    margin: 0 auto;
+    height: 99%;
+    z-index: 5
+}
+
+#zoom-video-element {
+    height: inherit;
+    width: inherit;
+    /* REQUIRED - handle flipping of ZoOm interface.  users of selfie-style interfaces are trained to see their mirror image */
+    transform: scaleX(-1);
+    z-index: 5;
+    border: solid black 1px;
+}
+
+#zoom-interface-container {
+    position: absolute;
+    z-index: 5
+}
