@@ -3,8 +3,20 @@ body    {
 }
 div#GameViewport {
         background-color: black;
-        width: 90%;
-        margin-left: 15%;
+        width: 99%;
         height: 97.5vh;
         overflow: hidden;
+        display: inline-flex;
+}
+#ViewportLeft   {
+    border: solid white 2px;
+    width: 20%;
+    margin-left: 15%;
+    display: inline-block;
+}
+
+#ViewportRight  {
+    border: solid white 2px;
+    width: 80%;
+    display: inline-block;
 }

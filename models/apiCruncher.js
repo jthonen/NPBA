@@ -79,7 +79,9 @@ function makePlayerObj(onePlayersStats) {
                 var player_id = statsRow[1];
                 break;
             case "PLAYER_NAME":
-                var player_name = statsRow[1];
+                let fullName = statsRow[1].split(" ");
+                let lastName = (fullName.length === 2) ? fullName[1] : ""+fullName[1]+" "+fullName[2]+"";
+                var displayedName = statsRow[1][0]+". "+lastName;
                 break;
             case "TEAM_ABBREVIATION":
                 var player_team = statsRow[1];
@@ -89,7 +91,7 @@ function makePlayerObj(onePlayersStats) {
                 break;
             default: break;
         };
-        let startedPlayerObj = new Player(player_id, player_name, player_team, player_fantasy_points, null, null);
+        let startedPlayerObj = new Player(player_id, displayedName, player_team, player_fantasy_points, null, null);
         var finishedPlayerObj = givePlayerStyle(teamStyleGuide, startedPlayerObj);
     };
     return finishedPlayerObj;
@@ -106,7 +108,7 @@ function allPlayers(data) {
     return playersArray;
 };
 
-function crunch()   {
+function loadHand()   {
     let api_data = API_DATA.resultSets[0];
     let data = {
         "headers": api_data.headers,
@@ -121,6 +123,19 @@ function crunch()   {
     return hand;
 };
 
-let hand = crunch();
+function drawCards(num_cards_required)    {
+    let api_data = API_DATA.resultSets[0];
+    let data = {
+        "headers": api_data.headers,
+        "allStats": api_data.rowSet
+    }
+    let players = allPlayers(data);
+    let drawing = [];
+    for (i=0; i < num_cards_required; i++)   {
+        let randomIndex = Math.floor(Math.random() * Math.floor(players.length));
+        drawing.push(players[randomIndex]);
+    };
+    return drawing;
+};
 
-module.exports = hand;
+module.exports = {loadHand, drawCards};

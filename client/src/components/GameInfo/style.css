@@ -1,0 +1,8 @@
+div#GameInfo    {
+    border: solid white 2px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    display: block;
+    align-content: flex-start;
+}

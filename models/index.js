@@ -1,3 +1,4 @@
 module.exports = {
-    nba_data: require("./apiCruncher.js")
+    loadHand: require("./apiCruncher.js").loadHand,
+    drawCards: require("./apiCruncher.js").drawCards
 };

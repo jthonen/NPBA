@@ -6,12 +6,12 @@ function CardButton(props) {
         <button 
             className="CardButton"
             name={props.card.name}
-            value={props.card.usersDecision}
+            value={props.card.currentlyDisplayedOption}
             onClick={(event) => {
                 return props.handleClick(event);
             }}
         >
-            {props.card.usersDecision}
+            {props.card.currentlyDisplayedOption}
         </button>
     );
 };

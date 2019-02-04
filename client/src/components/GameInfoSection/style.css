@@ -1,0 +1,9 @@
+div.GameInfoSection {
+    margin-left: 10%;
+    margin-top: 33%;
+    height: 20%;
+}
+
+h2.GameInfoHeader   {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
