@@ -4,7 +4,7 @@ import GameViewport from "./pages/GameViewport";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import Select from "./pages/ButtonSelect";
-import ZoOm from "./pages/FaceMatch"
+import Zoom from "./pages/Zoom"
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
           <Route exact path="/Select" component={Select} />
           <Route exact path="/Play" component={GameViewport} />
           <Route exact path="/SignUp" component={SignUp} />
-          <Route exact path="/ZoOm" component={ZoOm} />
+          <Route exact path="/Zoom" component={Zoom} />
           <Route component={NoMatch}/>
         </Switch>
     </Router>
