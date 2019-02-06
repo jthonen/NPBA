@@ -1,4 +1,5 @@
 module.exports = {
     loadHand: require("./apiCruncher.js").loadHand,
-    drawCards: require("./apiCruncher.js").drawCards
+    drawCards: require("./apiCruncher.js").drawCards,
+    signUp: require("./userModels")
 };

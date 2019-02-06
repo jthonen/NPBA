@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const crunch = require("../../../controllers");
+const crunch = require("../../../controllers").nbaController;
 
 router.route("/loadHand")
     .get((req, res) =>  {

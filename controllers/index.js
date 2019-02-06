@@ -1,15 +1,7 @@
-const models = require("../models");
-
+const nbaController = require("./nbaController");
+const userController = require("./userController");
 // defining methods for the nba api controller
 
-const nbaController = {
-    loadHand: function(req, res) {
-        return models.loadHand;
-    },
-    drawCards: function(req, res)   {
-        return models.drawCards
-    }
+const controllers = {nbaController, userController};
 
-}
-
-module.exports = nbaController;
+module.exports = controllers;
