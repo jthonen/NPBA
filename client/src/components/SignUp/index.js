@@ -1,40 +1,47 @@
 import React from "react";
 import "./style.css";
+import Form from 'react-bootstrap/Form';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Button from 'react-bootstrap/Button';
 
 function SignUp(props) {
+    console.log(props);
     return (
         <div>
-            <ul class="slideshow">
+            {/* <ul class="slideshow">
                 <li></li><li></li><li></li><li></li><li></li>
                 <li></li><li></li><li></li><li></li><li></li>
                 <li></li><li></li><li></li><li></li><li></li>
                 <li></li><li></li><li></li><li></li><li></li>
                 <li></li><li></li><li></li><li></li><li></li>
-            </ul>
+            </ul> */}
+            <Form className='signup-form'> 
+                <Form.Group>
+                    <Form.Control type="text" placeholder="Username" id='userName'/>    
+                </Form.Group>
+                <Form.Group> 
+                    <Form.Control type="email" placeholder="Email Address" id='userEmail' />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control type="password" placeholder="Password" id='userPassword'/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control type="email" placeholder="First Name" id='userFirstName' />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control type="email" placeholder="Last Name" id='userLastName'/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control type="email" placeholder="DOB" id='userDOB' />
+                    <Form.Text>Must be 21+</Form.Text>
+                </Form.Group>
+                <ButtonToolbar>
+                    <Button variant="dark" onClick={(event) =>{
+                        return props.handleClick(event);
+                    }}> Sign Up</Button>
+                </ButtonToolbar>
+            </Form>
 
-            <form id="msform" action="https://www.enformed.io/gh0zckmw" method="POST">
-                <fieldset>
-                    <div id="main">
-                        <h2 class="fs-title">Create your Admin Account</h2>
-                        <div id="login">
-                    
-                            <h3 class="fs-subtitle">Name</h3>
-                            <input type="text" name="name" id="name" required="required" placeholder="Please Enter Name"/><br /><br />
-                                
-                            <h3 class="fs-subtitle">Username</h3>
-                            <input type="text" name="uname" id="Username" required="required" placeholder="Username"/><br /><br />
-                            
-                            <h3 class="fs-subtitle">Email</h3>
-                            <input type="email" name="email" id="email" required="required" placeholder="john123@gmail.com"/><br/><br />
-                            
-                            <h3 class="fs-subtitle">Password</h3>
-                            <input type="password" name="password" id="city" required="required" placeholder="Please Enter Password"/><br/><br />
-            
-                            <input action = "" type="submit" value="Submit" class="submit action-button" name="submit"/><br />
-                        </div>
-                    </div>
-                </fieldset>
-            </form>    
         </div>
     );
 }

@@ -1,16 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import GameViewport from "./pages/GameViewport";
-//import NoMatch from "./pages/NoMatch";
-//import SignUp from "./pages/SignUp";
-import Zoom from "./pages/Zoom";
+import GameViewport from "./pages/GameViewport/index";
+import NoMatch from "./pages/NoMatch/index";
+import SignUp from "./pages/SignUp/index";
+import Zoom from "./pages/Zoom/index";
+import Signin from "./pages/SignIn";
 
 function App() {
   return (
     <Router>
         <Switch>
-          <Route exact path="/" component={GameViewport} />
+          <Route exact path="/" component={Signin} />
+          <Route exact path="/SignUp" component={SignUp} />
           <Route exact path="/Zoom" component={Zoom} />
+          <Route exact path="/Game" component={GameViewport} />
+          <Route component={NoMatch} />
         </Switch>
     </Router>
   );

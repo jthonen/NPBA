@@ -1,12 +1,31 @@
 import React, { Component } from "react";
-
+import API from '../../utils/API';
 import SignUp from "../../components/SignUp";
 
 class Signup extends Component {
+    
+    handleClick = (event) => {
+        event.preventDefault();
+        
+        let user = {
+            userName: document.getElementById('userName').value,
+            userEmail:document.getElementById('userEmail').value,
+            userPasword:document.getElementById('userPassword').value,
+            userFirstName:document.getElementById('userFirstName').value,
+            userLastName:document.getElementById('userLastName').value,
+            userDOB:document.getElementById('userDOB').value
+        };
+        console.log(user);
+        this.sendNewUser(user);
+    }
+    sendNewUser = (user) => {
+        return API.SignUp(user);
+    }
 
 render() {
     return (
-        <SignUp />
+        <SignUp
+        handleClick={this.handleClick} />
     );
 }
 }
