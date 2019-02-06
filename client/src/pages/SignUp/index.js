@@ -10,7 +10,7 @@ class Signup extends Component {
         let user = {
             userName: document.getElementById('userName').value,
             userEmail:document.getElementById('userEmail').value,
-            userPasword:document.getElementById('userPassword').value,
+            userPassword:document.getElementById('userPassword').value,
             userFirstName:document.getElementById('userFirstName').value,
             userLastName:document.getElementById('userLastName').value,
             userDOB:document.getElementById('userDOB').value
@@ -19,7 +19,7 @@ class Signup extends Component {
         this.sendNewUser(user);
     }
     sendNewUser = (user) => {
-        return API.SignUp(user);
+        return API.signUp(user);
     }
 
 render() {
