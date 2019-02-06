@@ -7,8 +7,7 @@ export default {
   drawCards: function(drawing) {
     return axios.get("/api/nba/drawCards/"+drawing);
   },
-  signUp: function()  {
-    return axios.get("/api/user/signUp");
+  signUp: function(userObject)  {
+    return axios.post("/api/user/signUp", userObject);
   }
-
 };
