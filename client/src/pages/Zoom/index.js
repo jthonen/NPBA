@@ -11,8 +11,8 @@ const checkBrowserSupport = ZoOmFunctions.checkBrowserSupport;
 const setupCameraAndVideoElement = ZoOmFunctions.setupCameraAndVideoElement;
 const prepareInterface = ZoOmFunctions.prepareInterface;
 const captureZoomSession = ZoOmFunctions.captureZoomSession;
-//const sendZoomSessionToAPIForLivenessCheck = ZoOmFunctions.sendZoomSessionToAPIForLivenessCheck;
-const onComplete = ZoOmFunctions.onComplete;
+//const sendZoomSessionToAPIForEnrollment = ZoOmFunctions.sendZoomSessionToAPIForEnrollment;
+const onLivenessCheckComplete = ZoOmFunctions.onLivenessCheckComplete;
 
 function timer(run, time) {
   return setTimeout(function() {
@@ -22,7 +22,7 @@ function timer(run, time) {
 
 function captureAndSendZoomSession()  {
   captureZoomSession();
-  timer(onComplete, 15000);
+  timer(onLivenessCheckComplete, 15000);
 };
 
 class ZoOM extends Component{
