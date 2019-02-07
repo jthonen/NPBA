@@ -9,5 +9,8 @@ export default {
   },
   signUp: function(userObject)  {
     return axios.post("/api/user/signUp", userObject);
+  },
+  authentication: function(dataToUpload)  {
+    return axios.post("/api/ZoOm/authenticate", dataToUpload);
   }
 };
