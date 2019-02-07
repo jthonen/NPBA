@@ -5,7 +5,6 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Button from 'react-bootstrap/Button';
 
 function SignIn(props) {
-    console.log(props);
     return (
         <div>
              {/* <ul class="slideshow">
@@ -25,7 +24,10 @@ function SignIn(props) {
                 </Form.Group>
                 
                 <ButtonToolbar>
-                    <Button variant="dark">Sign In</Button>
+                    <Button variant="dark" onClick={(event) =>  {
+                        event.preventDefault();
+                        return props.handleClick();
+                    }}>Sign In</Button>
                     <Button variant="dark" href='/SignUp'>Create An Account</Button>
                 </ButtonToolbar>
             </Form>

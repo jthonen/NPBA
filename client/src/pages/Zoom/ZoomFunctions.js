@@ -1,3 +1,5 @@
+import API from "../../utils/API";
+
 var licenseKey = "d7fb5IUijPxK6R4zVqFfq2fDYMlfLRVH";
 var videoTrack;
 var lastSessionData;
@@ -215,6 +217,56 @@ function captureZoomSession() {
     latestZoomSession.capture();
 };
 
+function isArray(val) {
+  var toString = ({}).toString;
+  return toString.call(val) === "[object Array]";
+}
+
+function isObject(val) {
+  return !isArray(val) && typeof val === "object" && !!val;
+}
+
+// convert object to formData
+function convert(jsonObject, parentKey, carryFormData) {
+  var formData;
+  if (carryFormData) {
+    formData = carryFormData;
+  } else {
+    formData = new FormData();
+  }
+  var index = 0;
+  for (var key in jsonObject) {
+    if (jsonObject.hasOwnProperty(key)) {
+      if (jsonObject[key] !== null && jsonObject[key] !== undefined) {
+        var propName = parentKey || key;
+        if (parentKey && isObject(jsonObject)) {
+          propName = parentKey + "[" + key + "]";
+        }
+        if (parentKey && isArray(jsonObject)) {
+          propName = parentKey + "[" + index + "]";
+        }
+        if (jsonObject[key] instanceof Blob) {
+          formData.append(propName, jsonObject[key]);
+        } else if (jsonObject[key] instanceof File) {
+          formData.append(propName, jsonObject[key]);
+        } else if (jsonObject[key] instanceof FileList) {
+          for (var j = 0; j < jsonObject[key].length; j++) {
+            formData.append(propName + "[" + j + "]", jsonObject[key].item(j));
+          }
+        } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
+          convert(jsonObject[key], propName, formData);
+        } else if (typeof jsonObject[key] === "boolean") {
+          formData.append(propName, +jsonObject[key] ? "1" : "0");
+        } else {
+          formData.append(propName, jsonObject[key]);
+        }
+      }
+    }
+    index++;
+  }
+  return formData;
+}
+
 function sendZoomSessionToAPIForLivenessCheck() {
     appendLog("Sending up session data...");
   
@@ -228,29 +280,79 @@ function sendZoomSessionToAPIForLivenessCheck() {
       return;
     }
     appendLog("Calling ZoOm REST API with ZoOm Session Data...");
-    var dataToUpload = new FormData();
-    dataToUpload.append("sessionId", lastSessionId);
-    dataToUpload.append("zoomSessionData", lastSessionData);
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        var result = this.responseText;
-        console.log("ZoOm REST API Response: " + result);
-      }
-    });
-  
-    xhr.open("POST", "https://api.zoomauth.com/api/v1/biometrics/liveness");
-    xhr.setRequestHeader("X-App-Token", licenseKey);
-    xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
-    xhr.onreadystatechange = function () {
-      if (this.readyState === 4) {
-        appendLog("Liveness Result from ZoOm REST API: " + JSON.parse(this.responseText).data.livenessResult);
-      }
-    };
-    xhr.send(dataToUpload);
+
+    // var targets = [{zoomSessionData:lastSessionData}];
+    // var user = "yousef";
+    // let enrollmentIdentifier = {enrollmentIdentifier:user.trim()};
+
+    // var parameters = {};
+    // parameters.source = enrollmentIdentifier;
+    // parameters.targets = targets;
+    // parameters.sessionId = lastSessionId;
+
+    // console.log(parameters);
+
+    // var dataToUpload = convert(parameters);
+
+    // // var dataToUpload = convert({}, ["source", "targets", "sessionId"], {source, targets, "sessionId": lastSessionId})
+    
+    // dataToUpload.get("source");
+
+    // var xhr = new XMLHttpRequest();
+    // // xhr.withCredentials = true;
+
+    // xhr.addEventListener("readystatechange", function () {
+    // if (this.readyState === 4) {
+    //     var result = this.responseText;
+    //     console.log("ZoOm REST API Response: " + result);
+    // }
+    // });
+
+    // xhr.open("POST", "https://api.zoomauth.com/api/v1/biometrics/authenticate");
+    // xhr.setRequestHeader("X-App-Token", licenseKey);
+    // xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
+    // //xhr.setRequestHeader("Content-Type", "application/json");
+
+    // xhr.onreadystatechange = function () {
+    // if (this.readyState === 4) {
+    //     appendLog("Result from ZoOm REST API: " + this.responseText);
+    // }
+    // };
+
+    // xhr.send(dataToUpload);
 };
 
-module.exports = {
+function onComplete() {    
+  appendLog("Calling ZoOm REST API with ZoOm Session Data...");
+  var dataToUpload = new FormData();
+  dataToUpload.append("sessionId", lastSessionId);
+  var xhr = new XMLHttpRequest();
+  var endpoint = "https://api.zoomauth.com/api/v1/biometrics/authenticate";
+  var parameters = {};
+  parameters.source = {enrollmentIdentifier: "Yousef"};
+  parameters.targets = [{zoomSessionData: lastSessionData}];
+  parameters.sessionId = lastSessionId;
+  parameters.performContinuousLearning = "true";
+  console.log(parameters);
+  dataToUpload = convert(parameters);
+  console.log(dataToUpload)
+
+  xhr.open("POST", endpoint);
+  xhr.setRequestHeader("X-App-Token", licenseKey);
+  xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
+  xhr.onreadystatechange = function () {
+    if (this.readyState === 4) {
+          appendLog("Result from ZoOm REST API: " + this.responseText);
+      }
+  }
+  xhr.upload.onprogress = function name(event) {
+    var progress = Math.round((event.loaded / event.total) * 100);
+    console.log(progress);
+  };
+  xhr.send(dataToUpload);
+};
+
+export default {
     appendLog,
     loadZoomAuthenticationJS,
     preloadZoom,
@@ -259,5 +361,5 @@ module.exports = {
     setupCameraAndVideoElement, 
     prepareInterface,
     captureZoomSession,
-    sendZoomSessionToAPIForLivenessCheck
+    onComplete
 };
