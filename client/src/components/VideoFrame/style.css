@@ -5,6 +5,8 @@
 }
 
 #zoom-video-element {
+    min-height: 360px;
+    min-width: 640px;
     height: inherit;
     width: inherit;
     /* REQUIRED - handle flipping of ZoOm interface.  users of selfie-style interfaces are trained to see their mirror image */

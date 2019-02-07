@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 import ReturnButton from "../ReturnButton";
 import SignInForm from "../SignInForm";
+import CreateAccountForm from "../CreateAccountForm";
 
 function InputDiv(props)    {
     return (
@@ -9,7 +10,7 @@ function InputDiv(props)    {
             <ReturnButton handleClick={props.handleReturnButtonClick}/>
             {(props.currentPhase.subphase === "B") ? 
                 <SignInForm handleClick={props.handleSignInButtonClick}/> :
-                console.log("Create Account Div")
+                <CreateAccountForm handleClick={props.handleCreateAccountClick} />
             }
         </div>
     );
