@@ -267,75 +267,55 @@ function convert(jsonObject, parentKey, carryFormData) {
   return formData;
 }
 
-function sendZoomSessionToAPIForLivenessCheck() {
-    appendLog("Sending up session data...");
-  
-    if(!doesZoomSDKObjectExist()) {
-      appendLog("Precondition failed: ZoomAuthentication.js must be loaded prior to using ZoomSDK functionality.");
-      return;
-    }
-  
-    if(!lastSessionData) {
-      appendLog("Precondition failed: No session data to send. You must capture session first");
-      return;
-    }
-    appendLog("Calling ZoOm REST API with ZoOm Session Data...");
+function sendZoomSessionToAPIForEnrollment() {
+  appendLog("Sending up session data...");
 
-    // var targets = [{zoomSessionData:lastSessionData}];
-    // var user = "yousef";
-    // let enrollmentIdentifier = {enrollmentIdentifier:user.trim()};
+  if(!doesZoomSDKObjectExist()) {
+    appendLog("Precondition failed: ZoomAuthentication.js must be loaded prior to using ZoomSDK functionality.");
+    return;
+  }
 
-    // var parameters = {};
-    // parameters.source = enrollmentIdentifier;
-    // parameters.targets = targets;
-    // parameters.sessionId = lastSessionId;
-
-    // console.log(parameters);
-
-    // var dataToUpload = convert(parameters);
-
-    // // var dataToUpload = convert({}, ["source", "targets", "sessionId"], {source, targets, "sessionId": lastSessionId})
-    
-    // dataToUpload.get("source");
-
-    // var xhr = new XMLHttpRequest();
-    // // xhr.withCredentials = true;
-
-    // xhr.addEventListener("readystatechange", function () {
-    // if (this.readyState === 4) {
-    //     var result = this.responseText;
-    //     console.log("ZoOm REST API Response: " + result);
-    // }
-    // });
-
-    // xhr.open("POST", "https://api.zoomauth.com/api/v1/biometrics/authenticate");
-    // xhr.setRequestHeader("X-App-Token", licenseKey);
-    // xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
-    // //xhr.setRequestHeader("Content-Type", "application/json");
-
-    // xhr.onreadystatechange = function () {
-    // if (this.readyState === 4) {
-    //     appendLog("Result from ZoOm REST API: " + this.responseText);
-    // }
-    // };
-
-    // xhr.send(dataToUpload);
-};
-
-function onComplete() {    
+  if(!lastSessionData) {
+    appendLog("Precondition failed: No session data to send. You must capture session first");
+    return;
+  }
   appendLog("Calling ZoOm REST API with ZoOm Session Data...");
   var dataToUpload = new FormData();
+  var enrollmentId = "jelmished";
+  dataToUpload.append("enrollmentIdentifier", enrollmentId)
   dataToUpload.append("sessionId", lastSessionId);
+  dataToUpload.append("zoomSessionData", lastSessionData);
+  var xhr = new XMLHttpRequest();
+  xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4) {
+      var result = this.responseText;
+      console.log("ZoOm REST API Response: " + result);
+    }
+  });
+
+  xhr.open("POST", "https://api.zoomauth.com/api/v1/biometrics/enrollment");
+  xhr.setRequestHeader("X-App-Token", licenseKey);
+  xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
+  xhr.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      appendLog("Liveness Result from ZoOm REST API: " + JSON.parse(this.responseText).data.livenessResult);
+    }
+  };
+  xhr.send(dataToUpload);
+};
+
+function onLivenessCheckComplete() {    
+  appendLog("Calling ZoOm REST API with ZoOm Session Data...");
+  var dataToUpload = new FormData();
   var xhr = new XMLHttpRequest();
   var endpoint = "https://api.zoomauth.com/api/v1/biometrics/authenticate";
+
   var parameters = {};
   parameters.source = {enrollmentIdentifier: "Yousef"};
   parameters.targets = [{zoomSessionData: lastSessionData}];
   parameters.sessionId = lastSessionId;
   parameters.performContinuousLearning = "true";
-  console.log(parameters);
   dataToUpload = convert(parameters);
-  console.log(dataToUpload)
 
   xhr.open("POST", endpoint);
   xhr.setRequestHeader("X-App-Token", licenseKey);
@@ -361,5 +341,6 @@ export default {
     setupCameraAndVideoElement, 
     prepareInterface,
     captureZoomSession,
-    onComplete
+    sendZoomSessionToAPIForEnrollment,
+    onLivenessCheckComplete
 };
