@@ -1,5 +1,3 @@
-import API from "../../utils/API";
-
 var licenseKey = "d7fb5IUijPxK6R4zVqFfq2fDYMlfLRVH";
 var videoTrack;
 var lastSessionData;

@@ -10,7 +10,7 @@ export default {
   signUp: function(userObject)  {
     return axios.post("/api/user/signUp", userObject);
   },
-  authentication: function(dataToUpload)  {
-    return axios.post("/api/ZoOm/authenticate", dataToUpload);
+  signIn: function(username, password)  {
+    return axios.get("/api/user/signIn/username/"+username+"/password/"+password);
   }
 };

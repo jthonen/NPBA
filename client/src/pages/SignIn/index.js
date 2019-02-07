@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import API from '../../utils/API';
 import SignIn from "../../components/SignIn";
 
-function authenticateAgainstDB(tellUserToInputUsernameAndOrPassword)    {
-    console.log(tellUserToInputUsernameAndOrPassword);
+function authenticateAgainstDB(signInInfo)    {
+    API.signIn(signInInfo[0],signInInfo[1]).then((results) => {
+        (results.data.length > 0) ? console.log(results.data) : console.log("Username and/or password are incorrect");
+    })
 }
 
 function checkUserInputFilled(unvalidatedUserInputSet)    {
