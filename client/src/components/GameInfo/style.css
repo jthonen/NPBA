@@ -5,4 +5,5 @@ div#GameInfo    {
     color: white;
     display: block;
     align-content: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
