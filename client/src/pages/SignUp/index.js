@@ -18,16 +18,17 @@ class Signup extends Component {
         console.log(user);
         this.sendNewUser(user);
     }
+
     sendNewUser = (user) => {
         return API.SignUp(user);
     }
 
-render() {
-    return (
-        <SignUp
-        handleClick={this.handleClick} />
-    );
-}
+    render() {
+        return (
+            <SignUp
+            handleClick={this.handleClick} />
+        );
+    }
 }
 
 export default Signup;
