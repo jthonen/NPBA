@@ -12,5 +12,8 @@ export default {
   },
   signIn: function(username, password)  {
     return axios.get("/api/user/signIn/username/"+username+"/password/"+password);
+  },
+  checkUsernameExists: function() {
+    return axios.get("/api/user/checkUsernameExists");
   }
 };

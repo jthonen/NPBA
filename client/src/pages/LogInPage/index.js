@@ -21,15 +21,6 @@ function timer(run, time) {
     }, time);
 }
 
-function loadAndPreloadZoOm(user)   {
-    console.log(user);
-    loadZoomAuthenticationJS();
-    timer(preloadZoom, 1000);
-    timer(initializeOnlineWithLicense, 2500);
-    timer(checkBrowserSupport, 3500);
-    timer(setupCameraAndVideoElement, 4000);
-    timer(prepareInterface, 5000)
-};
 
 class LogInPage extends Component   {
 
@@ -38,21 +29,39 @@ class LogInPage extends Component   {
         LogInOptions: ["Sign In", "Create Account"]
     };
 
-    launchZoOm(user)    {
-        this.setState({currentPhase: {"phase": "phase3", "subphase": "B"}});
+    
+    loadZoOm() {
+        loadZoomAuthenticationJS();
+        timer(preloadZoom, 1000);
+        timer(initializeOnlineWithLicense, 2500);
+        timer(checkBrowserSupport, 3500);
+    };
+
+    launchZoOm(subphase)    {
+        this.setState({currentPhase: {"phase": "phase3", "subphase": subphase}});
         window.onload = function () {
             appendLog("window.onload fired.");
         };
-        loadAndPreloadZoOm(user);
     }
 
     authenticateAgainstDB(signInInfo)    {
+        this.loadZoOm();
         API.signIn(signInInfo[0],signInInfo[1]).then((results) => {
             let user = results.data[0];
             (results.data.length > 0) ?
-                this.launchZoOm(user) : console.log("Username and/or password are incorrect");
+                this.launchZoOm(user, "B") : console.log("Username and/or password are incorrect");
+            setupCameraAndVideoElement();
+            timer(prepareInterface, 3000);
         })
     }
+
+    saveUserToDbAndBeginZoomEnrollment(user)    {
+        this.loadZoOm();
+        API.signUp(user);
+        this.launchZoOm("A");
+        setupCameraAndVideoElement();
+        timer(prepareInterface, 3000);
+    };
 
     checkUserInputFilled(unvalidatedUserInputSet)    {
         let validatingInputSet = unvalidatedUserInputSet.map((unvalidatedUserInput)  =>  {
@@ -78,7 +87,6 @@ class LogInPage extends Component   {
     }
 
     handleSignInButtonClick = () => {
-        console.log("SIGN IN BUTTON CLICKED");
         let unvalidatedUsername = {"value": document.getElementById("userNameInput").value, "type": "username or email"};
         let unvalidatedPassword = {"value": document.getElementById("userPasswordInput").value, "type": "password"};
         let unvalidatedUserInputSet = [unvalidatedUsername, unvalidatedPassword];
@@ -86,19 +94,19 @@ class LogInPage extends Component   {
     }
 
     handleCreateAccountClick = () => {  
-        let user = {
+        let inputtedUser = {
             userName: document.getElementById('userNameInput').value,
             userEmail:document.getElementById('userEmailInput').value,
             userPassword:document.getElementById('userPasswordInput').value,
             userFullName:document.getElementById('userFullNameInput').value,
             userDOB:document.getElementById('userDOBInput').value
         };
-        console.log(user);
-        // return API.signUp(user);
+        API.checkUsernameExists().then((results) =>    {
+            results.data.includes(inputtedUser.userName) ? alert("We're sorry but that username is unavailable, please select another.") : this.saveUserToDbAndBeginZoomEnrollment(inputtedUser);
+        });
     }
     
     render()    {
-        console.log(this);
         return  (
             <div id="LogInPage">
                 {

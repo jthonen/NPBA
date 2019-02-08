@@ -4,8 +4,7 @@ module.exports = {
     signUp: function(req, res)  {
         db.User
         .create(req.body)
-        // do something other than console.log(data);
-        .then(data => console.log(data))
+        .then()
         .catch(err => console.log(err))
     },
     signIn: function(req, res)  {
@@ -20,6 +19,18 @@ module.exports = {
                 });
                 console.log(access);
                 res.send(access);
+            })
+            .catch(err => console.log(err));
+    },
+    checkUsernameExists: function(req, res) {
+        db.User
+            .find()
+            .sort({ date: -1})
+            .then((dbModel) =>    {
+                let usernames = dbModel.map((user) =>   {
+                    return user.userName;
+                });
+                res.send(usernames);
             })
             .catch(err => console.log(err));
     }
