@@ -3,7 +3,7 @@ const userController = require("../../../controllers").userController;
 
 router.route("/signUp")
     .post((req, res) => {
-        userController.signUp(req);
+        userController.signUp(req.body);
     });
 
 router.route("/signIn/username/:username/password/:password")

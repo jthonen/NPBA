@@ -3,24 +3,6 @@ import "./style.css";
 import API from '../../utils/API';
 import LogInOptions from "../../components/LogInOptions";
 import InputDiv from "../../components/InputDiv";
-import ZoOmFunctions from "../../components/ZoOmAuthentication/ZoomFunctions";
-import ZoOmAuthentication from "../../components/ZoOmAuthentication";
-
-const appendLog = ZoOmFunctions.appendLog;
-const loadZoomAuthenticationJS = ZoOmFunctions.loadZoomAuthenticationJS;
-const preloadZoom = ZoOmFunctions.preloadZoom;
-const initializeOnlineWithLicense = ZoOmFunctions.initializeOnlineWithLicense;
-const checkBrowserSupport = ZoOmFunctions.checkBrowserSupport;
-const setupCameraAndVideoElement = ZoOmFunctions.setupCameraAndVideoElement;
-const prepareInterface = ZoOmFunctions.prepareInterface;
-
-
-function timer(run, time) {
-    return setTimeout(function() {
-      run();
-    }, time);
-}
-
 
 class LogInPage extends Component   {
 
@@ -29,41 +11,38 @@ class LogInPage extends Component   {
         LogInOptions: ["Sign In", "Create Account"]
     };
 
-    
-    loadZoOm() {
-        loadZoomAuthenticationJS();
-        timer(preloadZoom, 1000);
-        timer(initializeOnlineWithLicense, 2500);
-        timer(checkBrowserSupport, 3500);
+    // handle user choice between create account and sign in
+
+    handleLogInOptionClick = (event) => {
+        let phase2 = (event.target.id === "Create Account") ? {"phase": "phase2", "subphase": "A"} : {"phase": "phase2", "subphase": "B"};
+        this.setState({currentPhase: phase2});
+    }
+
+    // handles return button click if user wants to return to initial components
+    handleReturnButtonClick = () =>    {
+        let returningTo = {"phase": "phase1", "subphase": "A"};
+        this.setState({currentPhase: returningTo})
+    }
+
+    saveUsernameAndStartZoOmSession(username)   {
+        sessionStorage.setItem("task", "authentication");
+        sessionStorage.setItem("user", JSON.stringify(username));
+        window.location.replace("/ZoOmAuthentication");
+    }
+
+    // runs load zoom, calls API request for sign in authentication then after getting successful results 
+    authenticateAgainstDB(signInInfo)    {
+        API.signIn(signInInfo[0],signInInfo[1]).then((results) => {
+            let username = results.data[0].userName;
+            (results.data.length > 0) ? this.saveUsernameAndStartZoOmSession(username) : console.log("Username and/or password are incorrect");
+        });
     };
 
-    launchZoOm(subphase)    {
-        this.setState({currentPhase: {"phase": "phase3", "subphase": subphase}});
-        window.onload = function () {
-            appendLog("window.onload fired.");
-        };
-    }
-
-    authenticateAgainstDB(signInInfo)    {
-        this.loadZoOm();
-        API.signIn(signInInfo[0],signInInfo[1]).then((results) => {
-            let user = results.data[0];
-            (results.data.length > 0) ?
-                this.launchZoOm(user, "B") : console.log("Username and/or password are incorrect");
-            setupCameraAndVideoElement();
-            timer(prepareInterface, 3000);
-        })
-    }
-
-    saveUserToDbAndBeginZoomEnrollment(user)    {
-        this.loadZoOm();
-        API.signUp(user);
-        this.launchZoOm("A");
-        setupCameraAndVideoElement();
-        timer(prepareInterface, 3000);
-    }
-
-    checkUserInputFilled(unvalidatedUserInputSet)    {
+    // grabs input values and passes them into checks that they are filled
+    handleSignInButtonClick = () => {
+        let unvalidatedUsername = {"value": document.getElementById("userNameInput").value, "type": "username or email"};
+        let unvalidatedPassword = {"value": document.getElementById("userPasswordInput").value, "type": "password"};
+        let unvalidatedUserInputSet = [unvalidatedUsername, unvalidatedPassword];
         let validatingInputSet = unvalidatedUserInputSet.map((unvalidatedUserInput)  =>  {
             let validating = (unvalidatedUserInput.value !== "")  ? unvalidatedUserInput.value : "Please enter your "+unvalidatedUserInput.type;
             return validating;
@@ -74,31 +53,31 @@ class LogInPage extends Component   {
                 validatingInputSet[0] : (validatingInputSet[1] === "Please enter your password") ? 
                     validatingInputSet[1] : validatingInputSet;
         return (Array.isArray(tellUserToInputUsernameAndOrPassword)) ? this.authenticateAgainstDB(tellUserToInputUsernameAndOrPassword): alert(tellUserToInputUsernameAndOrPassword);
+
     }
 
-    handleLogInOptionClick = (event) => {
-        let phase2 = (event.target.id === "Create Account") ? {"phase": "phase2", "subphase": "A"} : {"phase": "phase2", "subphase": "B"};
-        this.setState({currentPhase: phase2});
+    saveUserAndStartZoOmEnrollment(user)    {
+        API.signUp(user);
+        sessionStorage.setItem("task", "enrollment");
+        sessionStorage.setItem("user", user.userName);
+        return setTimeout(function()    {
+            window.location.replace("/ZoOmAuthentication");
+        }, 2000);
     }
 
-    handleReturnButtonClick = () =>    {
-        let returningTo = {"phase": "phase1", "subphase": "A"};
-        this.setState({currentPhase: returningTo})
-    }
-
-    handleSignInButtonClick = () => {
-        let unvalidatedUsername = {"value": document.getElementById("userNameInput").value, "type": "username or email"};
-        let unvalidatedPassword = {"value": document.getElementById("userPasswordInput").value, "type": "password"};
-        let unvalidatedUserInputSet = [unvalidatedUsername, unvalidatedPassword];
-        this.checkUserInputFilled(unvalidatedUserInputSet);
+    verifyAgainstOtherUsers(inputtedUser)   {
+        API.checkUsernameExists().then((results) =>    {
+            console.log(results);
+            results.data.includes(inputtedUser.userName) ? alert("We're sorry but that username is unavailable, please select another.") : this.saveUserAndStartZoOmEnrollment(inputtedUser);
+        }); 
     }
 
     formValidationCreate = (inputtedUser) => {
-        (inputtedUser.userName === '') || 
+        return (inputtedUser.userName === '') || 
         (inputtedUser.userEmail === '') || 
         (inputtedUser.userPassword === '') ||
         (inputtedUser.userFullName === '') ||
-        (inputtedUser.userDOB === '') ? alert("Please fill out entire form"): console.log("youre good bruh");
+        (inputtedUser.userDOB === '') ? "false": "true";
     }
 
     handleCreateAccountClick = () => {  
@@ -109,13 +88,7 @@ class LogInPage extends Component   {
             userFullName:document.getElementById('userFullNameInput').value,
             userDOB:document.getElementById('userDOBInput').value
         };
-        console.log(inputtedUser);
-        this.formValidationCreate(inputtedUser);        
-
-        API.checkUsernameExists().then((results) =>    {
-            results.data.includes(inputtedUser.userName) ? alert("We're sorry but that username is unavailable, please select another.") 
-            : this.saveUserToDbAndBeginZoomEnrollment(inputtedUser);
-        }); 
+        (this.formValidationCreate(inputtedUser) === "true") ? this.verifyAgainstOtherUsers(inputtedUser) : alert("Please fill out this form in its entirety"); 
     }
     
     render()    {
@@ -126,13 +99,13 @@ class LogInPage extends Component   {
                         <LogInOptions
                             LogInOptions={this.state.LogInOptions}
                             handleClick={this.handleLogInOptionClick}
-                        /> : (this.state.currentPhase.phase === "phase2") ?
+                        /> :
                         <InputDiv
                             currentPhase={this.state.currentPhase}
                             handleReturnButtonClick={this.handleReturnButtonClick}
                             handleSignInButtonClick={this.handleSignInButtonClick}
                             handleCreateAccountClick={this.handleCreateAccountClick}
-                        /> : <ZoOmAuthentication LogInPageState={this.state}/>
+                        />
                 }
             </div>
         );

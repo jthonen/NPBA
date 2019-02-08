@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-function ZoomFrame()    {
+function ZoOmFrame()    {
     return (
         <div id="zoom-old-placeholder">
             <div id="zoom-parent-container">
@@ -12,4 +12,4 @@ function ZoomFrame()    {
     );
 };
 
-export default ZoomFrame;
+export default ZoOmFrame;

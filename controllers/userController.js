@@ -3,7 +3,7 @@ const db = require("../models/userModels");
 module.exports = {
     signUp: function(req, res)  {
         db.User
-        .create(req.body)
+        .create(req)
         .then()
         .catch(err => console.log(err))
     },

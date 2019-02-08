@@ -265,7 +265,7 @@ function convert(jsonObject, parentKey, carryFormData) {
   return formData;
 }
 
-function sendZoomSessionToAPIForEnrollment() {
+function sendZoomSessionToAPIForEnrollment(username) {
   appendLog("Sending up session data...");
 
   if(!doesZoomSDKObjectExist()) {
@@ -279,8 +279,8 @@ function sendZoomSessionToAPIForEnrollment() {
   }
   appendLog("Calling ZoOm REST API with ZoOm Session Data...");
   var dataToUpload = new FormData();
-  var enrollmentId = "jelmished";
-  dataToUpload.append("enrollmentIdentifier", enrollmentId)
+  console.log(username);
+  dataToUpload.append("enrollmentIdentifier", username);
   dataToUpload.append("sessionId", lastSessionId);
   dataToUpload.append("zoomSessionData", lastSessionData);
   var xhr = new XMLHttpRequest();
@@ -302,14 +302,15 @@ function sendZoomSessionToAPIForEnrollment() {
   xhr.send(dataToUpload);
 };
 
-function onLivenessCheckComplete() {    
+function onLivenessCheckComplete(username) {    
   appendLog("Calling ZoOm REST API with ZoOm Session Data...");
   var dataToUpload = new FormData();
   var xhr = new XMLHttpRequest();
   var endpoint = "https://api.zoomauth.com/api/v1/biometrics/authenticate";
 
   var parameters = {};
-  parameters.source = {enrollmentIdentifier: "Yousef"};
+  console.log(username);
+  parameters.source = {enrollmentIdentifier: username};
   parameters.targets = [{zoomSessionData: lastSessionData}];
   parameters.sessionId = lastSessionId;
   parameters.performContinuousLearning = "true";
@@ -320,13 +321,9 @@ function onLivenessCheckComplete() {
   xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
   xhr.onreadystatechange = function () {
     if (this.readyState === 4) {
-          appendLog("Result from ZoOm REST API: " + this.responseText);
+          appendLog(JSON.parse(this.response));
       }
   }
-  xhr.upload.onprogress = function name(event) {
-    var progress = Math.round((event.loaded / event.total) * 100);
-    console.log(progress);
-  };
   xhr.send(dataToUpload);
 };
 
