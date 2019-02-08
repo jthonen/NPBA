@@ -50,7 +50,7 @@ function ZoOm3() {
 
 function determineAuthenticateOrEnroll()  {
   let task = sessionStorage.task;
-  return (task === "authenticate") ? ZoOm2() : ZoOm3();   
+  return (task === "authentication") ? ZoOm2() : ZoOm3();   
 };
 
 class ZoOmAuthentication extends Component  {
