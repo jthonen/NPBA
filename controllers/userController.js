@@ -46,6 +46,15 @@ module.exports = {
             .catch(err => console.log(err));
     },
     getSessionKey: function(req, res)   {
-        console.log(req);
+        db.User
+            .find(req)
+            .sort({date: -1})
+            .then((data) => {
+                let failedMessage = "Please sign in and conduct a ZoOm session to use our app"
+                return (data.length !== 0) ? 
+                    res.send(data) : 
+                    res.send(failedMessage);
+            })
+            .catch(err => console.log(err));
     }
-}
+};

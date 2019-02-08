@@ -18,5 +18,8 @@ export default {
   },
   postSessionKey: function(username, key) {
     return axios.post("/api/user/postingSessionKey/", {username, key});
+  },
+  getSessionKey: function(username, key)  {
+    return axios.get("/api/user/getSessionKey/user/"+username+"/key/"+key);
   }
 };
