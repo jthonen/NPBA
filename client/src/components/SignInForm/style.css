@@ -1,5 +1,4 @@
 div#SignInForm  {
-    border: solid white 2px;
     margin-top: 2.5%;
     margin-bottom: 2.5%;
     padding-left: 12.5%;
@@ -10,15 +9,15 @@ div#SignInForm  {
 input.SignInFormInput   {
     margin-top: 5%;
     height: 50px;
-    width: 80%;
+    width: 90%;
     display: block;
     color: black;
-    padding-left: 15px;
+    padding-left: 5%;
 }
 
 button#SignInButton {
     margin-top: 5%;
-    width: 80%;
+    width: 90%;
     height: 50px;
     display: block;
     border-style: none;

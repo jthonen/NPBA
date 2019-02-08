@@ -1,8 +1,8 @@
 div#InputDiv   {
-    width: 60%;
-    height: 60%;
+    width: 90%;
+    height: 80%;
     border: solid white 2px;
     display: flex;
-    margin-left: 20%;
-    margin-top: 7.5%;
+    margin-left: 5%;
+    margin-top: 4.5%;
 }

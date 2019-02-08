@@ -13,9 +13,9 @@ function LogInOptions(props)    {
                         onClick={(event) =>   {
                             return props.handleClick(event);
                     }}>
-                        <h1 key={LogInOption+"H1"} className="LogInOptionText" > 
+                        <h2 key={LogInOption+"H1"} className="LogInOptionText" > 
                             {LogInOption} 
-                        </h1>
+                        </h2>
                     </div>
                 );
             })}

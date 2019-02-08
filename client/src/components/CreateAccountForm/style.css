@@ -1,0 +1,23 @@
+.CreateAccountFormInput {
+    display: block;
+    margin: 5%;
+    margin-left: 7.5%;
+    width: 900px;
+}
+#userFullNameInput  {
+    margin-top: 6%;
+}
+#userPasswordInput  {
+    margin-bottom: 2.5%;
+}
+button#CreateAccountButton {
+    margin-left: 7.5%;
+    width: 900px;
+    height: 50px;
+    display: block;
+    border-style: none;
+    background-color: black;
+    color: white;
+    border: solid white 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
