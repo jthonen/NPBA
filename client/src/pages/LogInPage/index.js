@@ -61,7 +61,7 @@ class LogInPage extends Component   {
         this.launchZoOm("A");
         setupCameraAndVideoElement();
         timer(prepareInterface, 3000);
-    };
+    }
 
     checkUserInputFilled(unvalidatedUserInputSet)    {
         let validatingInputSet = unvalidatedUserInputSet.map((unvalidatedUserInput)  =>  {
@@ -74,7 +74,7 @@ class LogInPage extends Component   {
                 validatingInputSet[0] : (validatingInputSet[1] === "Please enter your password") ? 
                     validatingInputSet[1] : validatingInputSet;
         return (Array.isArray(tellUserToInputUsernameAndOrPassword)) ? this.authenticateAgainstDB(tellUserToInputUsernameAndOrPassword): alert(tellUserToInputUsernameAndOrPassword);
-    };
+    }
 
     handleLogInOptionClick = (event) => {
         let phase2 = (event.target.id === "Create Account") ? {"phase": "phase2", "subphase": "A"} : {"phase": "phase2", "subphase": "B"};
@@ -93,6 +93,14 @@ class LogInPage extends Component   {
         this.checkUserInputFilled(unvalidatedUserInputSet);
     }
 
+    formValidationCreate = (inputtedUser) => {
+        (inputtedUser.userName === '') || 
+        (inputtedUser.userEmail === '') || 
+        (inputtedUser.userPassword === '') ||
+        (inputtedUser.userFullName === '') ||
+        (inputtedUser.userDOB === '') ? alert("Please fill out entire form"): console.log("youre good bruh");
+    }
+
     handleCreateAccountClick = () => {  
         let inputtedUser = {
             userName: document.getElementById('userNameInput').value,
@@ -101,9 +109,13 @@ class LogInPage extends Component   {
             userFullName:document.getElementById('userFullNameInput').value,
             userDOB:document.getElementById('userDOBInput').value
         };
+        console.log(inputtedUser);
+        this.formValidationCreate(inputtedUser);        
+
         API.checkUsernameExists().then((results) =>    {
-            results.data.includes(inputtedUser.userName) ? alert("We're sorry but that username is unavailable, please select another.") : this.saveUserToDbAndBeginZoomEnrollment(inputtedUser);
-        });
+            results.data.includes(inputtedUser.userName) ? alert("We're sorry but that username is unavailable, please select another.") 
+            : this.saveUserToDbAndBeginZoomEnrollment(inputtedUser);
+        }); 
     }
     
     render()    {

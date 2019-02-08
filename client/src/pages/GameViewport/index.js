@@ -75,7 +75,7 @@ class GameViewport extends Component    {
             let holdingDrawn = res.data.map((card) =>   {
                 card.currentlyDisplayedOption = "HOLD";
                 return card;
-            })
+            });
             usersDecision.holding.map((card) => {
                 holdingDrawn.push(card);
             });
