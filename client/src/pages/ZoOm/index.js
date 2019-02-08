@@ -56,16 +56,16 @@ function determineAuthenticateOrEnroll()  {
 class ZoOmAuthentication extends Component  {
 
   componentDidMount() {
-      window.onload = function () {
-        appendLog("window.onload fired.");
-      };
-      ZoOm1();
       setTimeout(function() {
         determineAuthenticateOrEnroll();
       }, 8500);
     };
 
     render()    {
+        window.onload = function () {
+          appendLog("window.onload fired.");
+        };
+        ZoOm1();
         return  (
           <ZoOmFrame />
         );

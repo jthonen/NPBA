@@ -1,3 +1,4 @@
+import API from "../../utils/API";
 var licenseKey = "d7fb5IUijPxK6R4zVqFfq2fDYMlfLRVH";
 var videoTrack;
 var lastSessionData;
@@ -265,6 +266,29 @@ function convert(jsonObject, parentKey, carryFormData) {
   return formData;
 }
 
+function sendUserAccessKey(username, results)  {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 8; i++) {
+    let random = (Math.floor(Math.random() * possible.length));
+    text = text+possible[random];
+  };
+  API.postSessionKey(username, text);
+  console.log("Passed Authentication");
+  sessionStorage.ZoOmResults = JSON.stringify(results);
+  sessionStorage.sessionKey = text;
+  setTimeout(function() {
+    window.location.replace("/Home");
+  }, 2000);
+};
+
+function denyUserAccess() {
+  console.log("Failed Authentication");
+  setTimeout(function() {
+    window.location.replace("/");
+  }, 3000)
+};
+
 function sendZoomSessionToAPIForEnrollment(username) {
   appendLog("Sending up session data...");
 
@@ -286,8 +310,9 @@ function sendZoomSessionToAPIForEnrollment(username) {
   var xhr = new XMLHttpRequest();
   xhr.addEventListener("readystatechange", function () {
     if (this.readyState === 4) {
-      var result = this.responseText;
-      console.log("ZoOm REST API Response: " + result);
+      let response = JSON.parse(this.response);
+      let results = response.data.results[0];
+      sendUserAccessKey(username, results);
     }
   });
 
@@ -297,6 +322,7 @@ function sendZoomSessionToAPIForEnrollment(username) {
   xhr.onreadystatechange = function () {
     if (this.readyState === 4) {
       appendLog("Liveness Result from ZoOm REST API: " + JSON.parse(this.responseText).data.livenessResult);
+
     }
   };
   xhr.send(dataToUpload);
@@ -307,9 +333,7 @@ function onLivenessCheckComplete(username) {
   var dataToUpload = new FormData();
   var xhr = new XMLHttpRequest();
   var endpoint = "https://api.zoomauth.com/api/v1/biometrics/authenticate";
-
   var parameters = {};
-  console.log(username);
   parameters.source = {enrollmentIdentifier: username};
   parameters.targets = [{zoomSessionData: lastSessionData}];
   parameters.sessionId = lastSessionId;
@@ -321,7 +345,9 @@ function onLivenessCheckComplete(username) {
   xhr.setRequestHeader("X-User-Agent", window.ZoomSDK.createZoomAPIUserAgentString(lastSessionId));
   xhr.onreadystatechange = function () {
     if (this.readyState === 4) {
-          appendLog(JSON.parse(this.response));
+          let response = JSON.parse(this.response);
+          let results = response.data.results[0];
+          (results.authenticated === true) ? sendUserAccessKey(username, results) : denyUserAccess();
       }
   }
   xhr.send(dataToUpload);

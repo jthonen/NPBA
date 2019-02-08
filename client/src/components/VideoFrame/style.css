@@ -1,7 +1,13 @@
 #zoom-parent-container {
-    margin: 0 auto;
+    margin-top: 10%;
+    margin-left: 25%;
     height: 99%;
-    z-index: 5
+    z-index: 5;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 7s;
 }
 
 #zoom-video-element {
@@ -12,10 +18,19 @@
     /* REQUIRED - handle flipping of ZoOm interface.  users of selfie-style interfaces are trained to see their mirror image */
     transform: scaleX(-1);
     z-index: 5;
-    border: solid black 1px;
+    border: solid white 1px;
 }
 
 #zoom-interface-container {
     position: absolute;
     z-index: 5
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

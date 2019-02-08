@@ -15,5 +15,8 @@ export default {
   },
   checkUsernameExists: function() {
     return axios.get("/api/user/checkUsernameExists");
+  },
+  postSessionKey: function(username, key) {
+    return axios.post("/api/user/postingSessionKey/", {username, key});
   }
 };

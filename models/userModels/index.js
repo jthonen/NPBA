@@ -7,6 +7,7 @@ const userSchema = new Schema({
   userPassword: { type: String, required: true}, 
   userFullName: { type: String, required: true },
   userDOB: {type: String, required: false},
+  sessionKey: {type: String, required: false},
   date: { type: Date, default: Date.now }
 });
 

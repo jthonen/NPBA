@@ -33,5 +33,19 @@ module.exports = {
                 res.send(usernames);
             })
             .catch(err => console.log(err));
+    },
+    postingSessionKey: function(req, res) {
+        let query = {userName: req.username}
+        let update = {sessionKey: req.key}
+        console.log(query);
+        console.log(update);
+        db.User
+            .update(query, update)
+            .sort({ date: -1})
+            .then(data => console.log(data))
+            .catch(err => console.log(err));
+    },
+    getSessionKey: function(req, res)   {
+        console.log(req);
     }
 }

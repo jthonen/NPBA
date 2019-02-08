@@ -16,4 +16,9 @@ router.route("/checkUsernameExists")
         userController.checkUsernameExists(req, res);
     })
 
+router.route("/postingSessionKey")
+    .post((req, res) => {
+        userController.postingSessionKey(req.body);
+    })
+
 module.exports = router;

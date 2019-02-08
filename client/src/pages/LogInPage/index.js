@@ -27,7 +27,7 @@ class LogInPage extends Component   {
     saveUsernameAndStartZoOmSession(username)   {
         sessionStorage.setItem("task", "authentication");
         sessionStorage.setItem("user", JSON.stringify(username));
-        window.location.replace("/ZoOmAuthentication");
+        window.location.replace("/ZoOm");
     }
 
     // runs load zoom, calls API request for sign in authentication then after getting successful results 

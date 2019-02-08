@@ -6,7 +6,7 @@ function ZoOmFrame()    {
         <div id="zoom-old-placeholder">
             <div id="zoom-parent-container">
                 <div id="zoom-interface-container"></div>
-                <video id="zoom-video-element" playsInline autoPlay></video>
+                    <video id="zoom-video-element" playsInline autoPlay></video>
             </div>
         </div>
     );
