@@ -133,7 +133,7 @@ function sendUserAccessKey(username, results, zoomResult) {
   sessionStorage.ZoOmResults = JSON.stringify(results);
   sessionStorage.sessionKey = zoomResult.sessionId;
   setTimeout(function () {
-    window.location.replace("/Home");
+    window.location.replace("/play");
   }, 2000);
 };
 

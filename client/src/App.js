@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LogInPage from "./pages/LogInPage";
 import ZoOm from "./pages/ZoOm";
 import GameViewport from "./pages/GameViewport";
-import MainViewport from "./pages/MainViewport";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
         <Switch>
           <Route exact path="/" component={LogInPage} />
           <Route exact path="/ZoOm" component={ZoOm} />
-          <Route exact path="/Home" component={MainViewport} />
           <Route exact path="/play" component={GameViewport} />
         </Switch>
     </Router>

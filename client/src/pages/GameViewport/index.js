@@ -4,6 +4,15 @@ import UsersHand from "../../components/UsersHand";
 import GameplayPanel from "../../components/GameplayPanel";
 import GameInfo from "../../components/GameInfo";
 import API from "../../utils/API";
+import AccountNotFound from "../../components/AccountNotFound";
+import MainProfilePanel from "../../components/MainProfilePanel";
+
+let task = (sessionStorage.task === undefined) ? "undefined" : sessionStorage.task;
+let enrollmentId = (sessionStorage.user === undefined) ? 
+console.log("not stored") : (task === "undefined") ? 
+console.log("not stored")  :(task === "authenticate") ? 
+sessionStorage.user.split('"')[1] : sessionStorage.user.split('"')[0];
+console.log(enrollmentId);
 
 class GameViewport extends Component    {
     state = {
@@ -17,6 +26,9 @@ class GameViewport extends Component    {
         betting: 0,
         handTotal: Number,
         credits: 200,
+        currentPhase: {phase: "phaseA", user: "not found"},
+        user: {},
+        failureMessage: String,
     };
 
     loadHand = () =>  {
@@ -94,31 +106,45 @@ class GameViewport extends Component    {
         return handTotal
     };
 
+    activateHome(data)  {
+        this.setState({currentPhase: {phase: "phaseB", user: "found"}});
+        this.setState({user: data});
+    };
+
+    componentDidMount() {
+        let keyInSessionStorage = sessionStorage.sessionKey;
+        API.getSessionKey(enrollmentId, keyInSessionStorage).then((results) =>   {
+            (Array.isArray(results.data)) ? this.activateHome(results.data[0]): console.log(results.data);
+        });
+    };
+
     render()    {
         console.log(this.state);
-        return (
+        return (           
+            (this.state.currentPhase.phase === "phaseA") ?
             <div id="GameViewport">
-                <div id="ViewportLeft">
+                <AccountNotFound/>
+            </div> :
+                <div id="GameViewport">
+                    <MainProfilePanel username={this.state.user.userName}/>
+                    <div id="ViewportLeft">
+                        <GameInfo 
+                            InfoHeadersArray={this.state.InfoHeaders}
+                            HandTotal={this.state.handTotal}
+                            Bet={this.state.betting}
+                            Credits={this.state.credits}/>
+                    </div>
+                    <div id="ViewportRight">
+                        <UsersHand 
+                            UsersHandArray={this.state.DealingHandArray}
+                            handleClick={this.handleCardClick}/>
+                        <GameplayPanel 
+                            options={this.state.GameplayPanelOptions} 
+                            handleClick={this.handleGameplayPanelClick}/>
+                    </div>
+                </div>       
+                
 
-                    <GameInfo 
-                        InfoHeadersArray={this.state.InfoHeaders}
-                        HandTotal={this.state.handTotal}
-                        Bet={this.state.betting}
-                        Credits={this.state.credits}/>
-
-                </div>
-                <div id="ViewportRight">
-                    <UsersHand 
-                        UsersHandArray={this.state.DealingHandArray}
-                        handleClick={this.handleCardClick}/>
-
-                    <GameplayPanel 
-                        options={this.state.GameplayPanelOptions} 
-                        handleClick={this.handleGameplayPanelClick}/>
-
-                </div>
-
-            </div>
         );
     };
 };

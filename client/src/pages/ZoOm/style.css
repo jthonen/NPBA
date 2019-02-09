@@ -11,6 +11,11 @@ button#beginZoomSession {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+div#LogInPage   {
+    width: 100%;
+    height: 100vh;
+}
+
 #poweredBy  {
     color: white;
     float: right;

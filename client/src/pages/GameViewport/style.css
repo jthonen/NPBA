@@ -2,21 +2,23 @@ body    {
     background-color: black;
 }
 div#GameViewport {
-        background-color: black;
-        width: 99%;
-        height: 97.5vh;
-        overflow: hidden;
-        display: inline-flex;
+    background-color: black;
+    width: 89%;
+    height: 90vh;
+    padding-top: 2%;
+    overflow: hidden;
+    display: inline-flex;
 }
+
 #ViewportLeft   {
     border: solid white 2px;
-    width: 20%;
-    margin-left: 15%;
+    width: 17.5%;
+    margin-left: 2.5%;
     display: inline-block;
 }
 
 #ViewportRight  {
     border: solid white 2px;
-    width: 80%;
+    width: 90%;
     display: inline-block;
 }
