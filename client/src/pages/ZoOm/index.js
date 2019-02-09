@@ -5,8 +5,11 @@ import API from "../../utils/API";
 
 const licenseKey = "d7fb5IUijPxK6R4zVqFfq2fDYMlfLRVH";
 var videoTrack;
-let task = sessionStorage.task;
-let enrollmentId = (task === "authenticate") ? sessionStorage.user.split('"')[1] : sessionStorage.user.split('"')[0];
+let task = (sessionStorage.task === undefined) ? "undefined" : sessionStorage.task;
+let enrollmentId = (sessionStorage.user === undefined) ? 
+console.log("not stored") : (task === "undefined") ? 
+console.log("not stored")  :(task === "authenticate") ? 
+sessionStorage.user.split('"')[1] : sessionStorage.user.split('"')[0];
 
 function appendLog(message) {
   console.log(message)
@@ -235,13 +238,6 @@ class ZoOmAuthentication extends Component {
 
       // See CameraHelpers.js for an example of how to handle and/or modify how you get/set the camera stream
       initCameraAndVideoLoop(0);
-
-      setTimeout(function () {
-        window.ZoomSDK.prepareInterface("zoom-interface-container", "zoom-video-element", function (prepareInterfaceResult) {
-          appendLog(prepareInterfaceResult);
-        });
-      }, 1000);
-
     };
 
   };
@@ -253,6 +249,9 @@ class ZoOmAuthentication extends Component {
         <button id="beginZoomSession" onClick={() => {
           return this.handleClick();
         }}> Begin ZoOm Session </button>
+        <div id="poweredBy">
+          <h1> Powered by ZoOm </h1>
+        </div>
       </div>
     );
   };

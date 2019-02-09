@@ -1,0 +1,17 @@
+#MainProfilePanel   {
+    border: solid white 2px;
+    width: 20%;
+    height: 90%;
+    margin-left: 2.5%;
+    margin-top: 2.5%;
+    color: white;
+    padding: 2%;
+}
+
+.MainProfilePanelOptions    {
+    border: solid white 2px;
+    height: 20%;
+    margin-top: 25%;
+    padding: 15%;
+    padding-top: 60%;
+}

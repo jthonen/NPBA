@@ -1,0 +1,17 @@
+#AccountNotFound    {
+    color: white;
+    padding-top: 15%;
+    animation-name: fadeInh1Opacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 7s;
+}
+
+@keyframes fadeInh1Opacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

@@ -10,3 +10,11 @@ button#beginZoomSession {
     border: solid white 2px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+#poweredBy  {
+    color: white;
+    float: right;
+    position: bottom;
+    margin-top: 20%;
+    margin-right: 2.5%;
+}

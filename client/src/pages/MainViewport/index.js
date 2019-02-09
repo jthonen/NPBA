@@ -1,27 +1,21 @@
 import React, {Component} from "react";
+import "./style.css";
+import AccountNotFound from "../../components/AccountNotFound";
+import MainProfilePanel from "../../components/MainProfilePanel";
+import GameViewport from "../GameViewport";
 import API from "../../utils/API";
-
-function DivA() {
-    return (
-        <div id="divA">
-            <h1> "User account not found. We apologize for the inconvenience." </h1>
-        </div>       
-    );
-};
-
-function DivB() {
-    return (
-        <div id="divB">
-        </div>
-    );
-};
 
 class MainViewport extends Component {
     state = {
         currentPhase: {phase: "phaseA", user: "not found"},
         user: {},
-        failureMessage: String
+        failureMessage: String,
+        optionClicked: String
     };
+
+    handlePlayClick = (event) => {
+        return this.setState({optionClicked: event.target.id});
+    }
 
     activateHome(data)  {
         this.setState({currentPhase: {phase: "phaseB", user: "found"}});
@@ -37,8 +31,21 @@ class MainViewport extends Component {
     };
 
     render()    {
+        console.log(this.state.user);
         return (
-            (this.state.currentPhase.phase === "phaseA") ? <DivA message={this.state.failureMessage}/> : <DivB />
+            <div id="MainViewport">
+                {
+                    (this.state.currentPhase.phase === "phaseA") ?
+                        <AccountNotFound/> :
+                        <MainProfilePanel 
+                            username={this.state.user.userName}
+                            handlePlayClick={this.handlePlayClick}
+                        />
+                }
+                {/* {
+                    (this.state.optionClicked === "Play") ? <GameViewport /> : <div id="hidden"> </div>
+                } */}
+            </div>
         );
     };
 };
