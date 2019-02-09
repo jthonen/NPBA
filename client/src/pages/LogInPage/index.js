@@ -25,7 +25,7 @@ class LogInPage extends Component   {
     }
 
     saveUsernameAndStartZoOmSession(username)   {
-        sessionStorage.setItem("task", "authentication");
+        sessionStorage.setItem("task", "authenticate");
         sessionStorage.setItem("user", JSON.stringify(username));
         window.location.replace("/ZoOm");
     }
@@ -61,7 +61,7 @@ class LogInPage extends Component   {
         sessionStorage.setItem("task", "enrollment");
         sessionStorage.setItem("user", user.userName);
         return setTimeout(function()    {
-            window.location.replace("/ZoOmAuthentication");
+            window.location.replace("/ZoOm");
         }, 2000);
     }
 
