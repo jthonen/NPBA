@@ -5,9 +5,11 @@ router.route("/signUp")
     .post((req, res) => {
         console.log(req.body);
         userController.signUp(req);
+    });
 
-        //userController(req);
-
+router.route("/signIn/username/:username/password/:password")
+    .get((req, res) =>  {
+        userController.signIn(req, res);
     });
 
 module.exports = router;
